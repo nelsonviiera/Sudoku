@@ -5,6 +5,7 @@ import javax.swing.JTextField;
 
 public class JTextFieldOnlyNumbers extends JTextField {
     private int maxCharacters = 1;
+    private int line, column;
     
     public JTextFieldOnlyNumbers() {
         super();
@@ -30,6 +31,22 @@ public class JTextFieldOnlyNumbers extends JTextField {
     }
     public void setMaxCharacters(int maxCharacters) {
         this.maxCharacters = maxCharacters;
+    }
+
+    public int getLine() {
+        return line;
+    }
+
+    public void setLine(int line) {
+        this.line = line;
+    }
+
+    public int getColumn() {
+        return column;
+    }
+
+    public void setColumn(int column) {
+        this.column = column;
     }
 
 }

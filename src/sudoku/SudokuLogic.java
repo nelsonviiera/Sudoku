@@ -2,6 +2,10 @@ package sudoku;
 
 import java.util.Random;
 
+/**
+ * @author Emerson Yudi Nakashima   1451600
+ * @author Nelson Vieira da Silva   1514628
+ */
 public class SudokuLogic {
 
     public static void generateRandomNumber(JTextFieldOnlyNumbers[][] matrixSudoku) {
