@@ -1,5 +1,6 @@
 package sudoku;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class SudokuLogic {
@@ -47,9 +48,61 @@ public class SudokuLogic {
     
     public static void removeSomeNumbers(JTextFieldOnlyNumbers[][] matrixSudoku){
         Random rand = new Random();
-        int numbersInMatrix = rand.nextInt(7)+39;
+        //Quantos numeros serao retirados do quadrante
         int numbersIn3x3 = rand.nextInt(6);
-        int i, j;
+        ArrayList vAux = new ArrayList();
+        int i, j = 0, k;
+        
+        //iniciando o arraylist
+        ArrayList characters = new ArrayList();
+        for(i = 1; i <= 9; i++)
+            characters.add(i);
+        
+        //Sorteando um numero que sera retirado do 1º quadrante
+        for(i = 0; i < numbersIn3x3; i++){
+            j = rand.nextInt(characters.size());
+            vAux.add(characters.get(j));
+            characters.remove(characters.get(j));
+            j++;
+        }
+        //Retirando os numeros sorteados
+        for(i = 0; i < 3; i++){
+            for(j = 0; j < 3; j++){
+                k = Integer.parseInt(matrixSudoku[i][j].getText());
+                if(vAux.contains(k))
+                    matrixSudoku[i][j].setText(null);
+            }
+        }
+        
+        vAux = new ArrayList();
+        //Restaurando arraylist
+        for(i = 1; i <= 9; i++)
+            characters.add(i);
+        //sorteando quantos numeros serao tirados
+        numbersIn3x3 = rand.nextInt(6);
+        
+        j = 0;
+        //sorteando os retirados do 2º quadrante
+        for(i = 0; i < numbersIn3x3; i++){
+            j = rand.nextInt(characters.size());
+            vAux.add(characters.get(j));
+            characters.remove(characters.get(j));
+            j++;
+        }
+        //retirando os sorteados
+        //Retirando os numeros sorteados
+        for(i = 0; i < 3; i++){
+            for(j = 3; j < 6; j++){
+                k = Integer.parseInt(matrixSudoku[i][j].getText());
+                if(vAux.contains(k))
+                    matrixSudoku[i][j].setText(null);
+            }
+        }
+        
+        
+        //a cada numero retirado, retirar ele do vetor
+        //salvar cada numero sorteado em um vetor
+        //navegar pelo primeiro quadrante e retirar aqueles que estao contidos no vetor 
     }
     
     private static void changeLine(int[][] sudoku, int line1, int line2) {
