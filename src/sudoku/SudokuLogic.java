@@ -52,33 +52,31 @@ public class SudokuLogic {
     
     public static void removeSomeNumbers(JTextFieldOnlyNumbers[][] matrixSudoku){
         Random rand = new Random();
-        //Quantos numeros serao retirados do quadrante
         int numbersIn3x3 = rand.nextInt(8);
         ArrayList vAux = new ArrayList();
         int i, j = 0, k;
         
-        //iniciando o arraylist
         ArrayList characters = new ArrayList();
         for(i = 1; i <= 9; i++)
             characters.add(i);
         
-        //Sorteando um numero que sera retirado do 1º quadrante
         for(i = 0; i < numbersIn3x3; i++){
             j = rand.nextInt(characters.size());
             vAux.add(characters.get(j));
             characters.remove(characters.get(j));
             j++;
         }
-        //Retirando os numeros sorteados
+
         for(i = 0; i < 3; i++){
             for(j = 0; j < 3; j++){
                 k = Integer.parseInt(matrixSudoku[i][j].getText());
                 if(!vAux.contains(k))
                     matrixSudoku[i][j].setText(null);
+                else
+                    matrixSudoku[i][j].setEditable(false);
             }
         }
 
-        //Preparando o segundo quadrante e retirando as peças deles
         vAux = new ArrayList();
         for(i = 1; i <= 9; i++)
             characters.add(i);
@@ -97,11 +95,12 @@ public class SudokuLogic {
                 k = Integer.parseInt(matrixSudoku[i][j].getText());
                 if(!vAux.contains(k))
                     matrixSudoku[i][j].setText(null);
+                else
+                    matrixSudoku[i][j].setEditable(false);
             }
         }
         
         
-        //Preparando o terceiro quadrante
         vAux = new ArrayList();
         for(i = 1; i <= 9; i++)
             characters.add(i);
@@ -120,11 +119,12 @@ public class SudokuLogic {
                 k = Integer.parseInt(matrixSudoku[i][j].getText());
                 if(!vAux.contains(k))
                     matrixSudoku[i][j].setText(null);
+                else
+                    matrixSudoku[i][j].setEditable(false);
             }
         }
         
         
-        //Preparando o quarto quadrante
         vAux = new ArrayList();
         for(i = 1; i <= 9; i++)
             characters.add(i);
@@ -143,11 +143,12 @@ public class SudokuLogic {
                 k = Integer.parseInt(matrixSudoku[i][j].getText());
                 if(!vAux.contains(k))
                     matrixSudoku[i][j].setText(null);
+                else
+                    matrixSudoku[i][j].setEditable(false);
             }
         }
         
         
-        //Preparando o quinto quadrante
         vAux = new ArrayList();
         for(i = 1; i <= 9; i++)
             characters.add(i);
@@ -166,11 +167,12 @@ public class SudokuLogic {
                 k = Integer.parseInt(matrixSudoku[i][j].getText());
                 if(!vAux.contains(k))
                     matrixSudoku[i][j].setText(null);
+                else
+                    matrixSudoku[i][j].setEditable(false);
             }
         }
         
         
-        //Preparando o sexto quadrante
         vAux = new ArrayList();
         for(i = 1; i <= 9; i++)
             characters.add(i);
@@ -189,11 +191,12 @@ public class SudokuLogic {
                 k = Integer.parseInt(matrixSudoku[i][j].getText());
                 if(!vAux.contains(k))
                     matrixSudoku[i][j].setText(null);
+                else
+                    matrixSudoku[i][j].setEditable(false);
             }
         }
         
         
-        //Preparando o setimo quadrante
         vAux = new ArrayList();
         for(i = 1; i <= 9; i++)
             characters.add(i);
@@ -212,11 +215,12 @@ public class SudokuLogic {
                 k = Integer.parseInt(matrixSudoku[i][j].getText());
                 if(!vAux.contains(k))
                     matrixSudoku[i][j].setText(null);
+                else
+                    matrixSudoku[i][j].setEditable(false);
             }
         }
         
         
-        //Preparando o oitavo quadrante
         vAux = new ArrayList();
         for(i = 1; i <= 9; i++)
             characters.add(i);
@@ -235,11 +239,12 @@ public class SudokuLogic {
                 k = Integer.parseInt(matrixSudoku[i][j].getText());
                 if(!vAux.contains(k))
                     matrixSudoku[i][j].setText(null);
+                else
+                    matrixSudoku[i][j].setEditable(false);
             }
         }
         
         
-        //Preparando o nono quadrante
         vAux = new ArrayList();
         for(i = 1; i <= 9; i++)
             characters.add(i);
@@ -258,6 +263,8 @@ public class SudokuLogic {
                 k = Integer.parseInt(matrixSudoku[i][j].getText());
                 if(!vAux.contains(k))
                     matrixSudoku[i][j].setText(null);
+                else
+                    matrixSudoku[i][j].setEditable(false);
             }
         }
         
