@@ -53,8 +53,8 @@ public class SudokuLogic {
                     matrixSudoku[line][column].setForeground(Color.red);
                     return false;
                 }
-                if(!(matrixSudoku[line][scrollColumn] == null)) {
-                    valor = Integer.valueOf(matrixSudoku[line][scrollColumn].getText());
+                if((!matrixSudoku[line][scrollColumn].getText().equals(""))) {
+                    valor = Integer.parseInt(String.valueOf(matrixSudoku[line][scrollColumn].getText()));
                     sum = sum + valor;
                 }
             }
@@ -72,8 +72,8 @@ public class SudokuLogic {
                     matrixSudoku[line][column].setForeground(Color.red);
                     return false;
                 }
-                if(!(matrixSudoku[scrollLine][column] == null)) {
-                    valor = Integer.valueOf(matrixSudoku[scrollLine][column].getText());
+                if((!matrixSudoku[scrollLine][column].getText().equals(""))) {
+                    valor = Integer.parseInt(String.valueOf(matrixSudoku[scrollLine][column].getText()));
                     sum = sum + valor;
                 }
             }
@@ -92,8 +92,11 @@ public class SudokuLogic {
                         matrixSudoku[line][column].setForeground(Color.red);
                         return false;
                     }
-                } if(!(matrixSudoku[scrollLine][scrollColumn] == null)) {
-                    valor = Integer.valueOf(matrixSudoku[scrollLine][scrollColumn].getText());
+                }
+                if(scrollColumn == 9)
+                    scrollColumn--;
+                if((!matrixSudoku[scrollLine][scrollColumn].getText().equals(""))) {
+                    valor = Integer.parseInt(String.valueOf(matrixSudoku[scrollLine][scrollColumn].getText()));
                     sum = sum + valor;
                 }
             }
@@ -131,10 +134,13 @@ public class SudokuLogic {
         }
         
         if(amountNumbersSudoku >= 81) {
-            System.out.println("If 81");
-            if((validateLine == true) && (validateColumn == true) && (validateMatrix3x3 == true))
-                System.out.println("true");
-                return true;
+            for(scrollLine = 0; scrollLine < 9; scrollLine++){
+                for(scrollColumn = 0; scrollColumn < 9; scrollColumn++){
+                    if(matrixSudoku[scrollLine][scrollColumn].getText().equals("") || matrixSudoku[scrollLine][scrollColumn].getForeground().equals(Color.red))
+                        return false;
+                }
+            }
+            return true;
         }
         return false;
     }

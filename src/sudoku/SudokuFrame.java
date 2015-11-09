@@ -42,6 +42,7 @@ public class SudokuFrame{
     
     private void init() {
         p1JPanel.removeAll();
+        p2JPanel.removeAll();
         for(scrollLine = 0; scrollLine < 9; scrollLine++){
             for(scrollColumn = 0; scrollColumn < 9; scrollColumn++){
                 final JTextFieldOnlyNumbers matrixCell = new JTextFieldOnlyNumbers();
@@ -81,7 +82,7 @@ public class SudokuFrame{
                                 System.out.println("Ganhou!");
                                 JOptionPane.showMessageDialog(p1JPanel, "Parabéns, você realizou o sudoku com êxito. Para jogar novamente, utilize o botão Novo Jogo");
                                 p1JPanel.setEnabled(false);
-                                new SudokuFrame();
+                                mainFrame.dispose();
                                 init();
                                 game();
                             }
@@ -115,6 +116,7 @@ public class SudokuFrame{
             public void actionPerformed(ActionEvent e) {
                 int op = JOptionPane.showConfirmDialog(null, "Deseja iniciar um novo jogo?", "", JOptionPane.YES_NO_OPTION);
                 if (op == JOptionPane.YES_OPTION) {
+                    mainFrame.dispose();
                     init();
                     game();
                 }
