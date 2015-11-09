@@ -53,7 +53,7 @@ public class SudokuLogic {
     public static void removeSomeNumbers(JTextFieldOnlyNumbers[][] matrixSudoku){
         Random rand = new Random();
         //Quantos numeros serao retirados do quadrante
-        int numbersIn3x3 = rand.nextInt(6);
+        int numbersIn3x3 = rand.nextInt(8);
         ArrayList vAux = new ArrayList();
         int i, j = 0, k;
         
@@ -73,40 +73,194 @@ public class SudokuLogic {
         for(i = 0; i < 3; i++){
             for(j = 0; j < 3; j++){
                 k = Integer.parseInt(matrixSudoku[i][j].getText());
-                if(vAux.contains(k))
+                if(!vAux.contains(k))
                     matrixSudoku[i][j].setText(null);
             }
         }
-        
+
+        //Preparando o segundo quadrante e retirando as peças deles
         vAux = new ArrayList();
-        //Restaurando arraylist
         for(i = 1; i <= 9; i++)
             characters.add(i);
-        //sorteando quantos numeros serao tirados
-        numbersIn3x3 = rand.nextInt(6);
-        
+        numbersIn3x3 = rand.nextInt(8);
         j = 0;
-        //sorteando os retirados do 2º quadrante
+
         for(i = 0; i < numbersIn3x3; i++){
             j = rand.nextInt(characters.size());
             vAux.add(characters.get(j));
             characters.remove(characters.get(j));
             j++;
         }
-        //retirando os sorteados
-        //Retirando os numeros sorteados
+
         for(i = 0; i < 3; i++){
             for(j = 3; j < 6; j++){
                 k = Integer.parseInt(matrixSudoku[i][j].getText());
-                if(vAux.contains(k))
+                if(!vAux.contains(k))
                     matrixSudoku[i][j].setText(null);
             }
         }
         
         
-        //a cada numero retirado, retirar ele do vetor
-        //salvar cada numero sorteado em um vetor
-        //navegar pelo primeiro quadrante e retirar aqueles que estao contidos no vetor 
+        //Preparando o terceiro quadrante
+        vAux = new ArrayList();
+        for(i = 1; i <= 9; i++)
+            characters.add(i);
+        numbersIn3x3 = rand.nextInt(8);
+        j = 0;
+
+        for(i = 0; i < numbersIn3x3; i++){
+            j = rand.nextInt(characters.size());
+            vAux.add(characters.get(j));
+            characters.remove(characters.get(j));
+            j++;
+        }
+
+        for(i = 0; i < 3; i++){
+            for(j = 6; j < 9; j++){
+                k = Integer.parseInt(matrixSudoku[i][j].getText());
+                if(!vAux.contains(k))
+                    matrixSudoku[i][j].setText(null);
+            }
+        }
+        
+        
+        //Preparando o quarto quadrante
+        vAux = new ArrayList();
+        for(i = 1; i <= 9; i++)
+            characters.add(i);
+        numbersIn3x3 = rand.nextInt(8);
+        j = 0;
+
+        for(i = 0; i < numbersIn3x3; i++){
+            j = rand.nextInt(characters.size());
+            vAux.add(characters.get(j));
+            characters.remove(characters.get(j));
+            j++;
+        }
+
+        for(i = 3; i < 6; i++){
+            for(j = 0; j < 3; j++){
+                k = Integer.parseInt(matrixSudoku[i][j].getText());
+                if(!vAux.contains(k))
+                    matrixSudoku[i][j].setText(null);
+            }
+        }
+        
+        
+        //Preparando o quinto quadrante
+        vAux = new ArrayList();
+        for(i = 1; i <= 9; i++)
+            characters.add(i);
+        numbersIn3x3 = rand.nextInt(8);
+        j = 0;
+
+        for(i = 0; i < numbersIn3x3; i++){
+            j = rand.nextInt(characters.size());
+            vAux.add(characters.get(j));
+            characters.remove(characters.get(j));
+            j++;
+        }
+
+        for(i = 3; i < 6; i++){
+            for(j = 3; j < 6; j++){
+                k = Integer.parseInt(matrixSudoku[i][j].getText());
+                if(!vAux.contains(k))
+                    matrixSudoku[i][j].setText(null);
+            }
+        }
+        
+        
+        //Preparando o sexto quadrante
+        vAux = new ArrayList();
+        for(i = 1; i <= 9; i++)
+            characters.add(i);
+        numbersIn3x3 = rand.nextInt(8);
+        j = 0;
+
+        for(i = 0; i < numbersIn3x3; i++){
+            j = rand.nextInt(characters.size());
+            vAux.add(characters.get(j));
+            characters.remove(characters.get(j));
+            j++;
+        }
+
+        for(i = 3; i < 6; i++){
+            for(j = 6; j < 9; j++){
+                k = Integer.parseInt(matrixSudoku[i][j].getText());
+                if(!vAux.contains(k))
+                    matrixSudoku[i][j].setText(null);
+            }
+        }
+        
+        
+        //Preparando o setimo quadrante
+        vAux = new ArrayList();
+        for(i = 1; i <= 9; i++)
+            characters.add(i);
+        numbersIn3x3 = rand.nextInt(8);
+        j = 0;
+
+        for(i = 0; i < numbersIn3x3; i++){
+            j = rand.nextInt(characters.size());
+            vAux.add(characters.get(j));
+            characters.remove(characters.get(j));
+            j++;
+        }
+
+        for(i = 6; i < 9; i++){
+            for(j = 0; j < 3; j++){
+                k = Integer.parseInt(matrixSudoku[i][j].getText());
+                if(!vAux.contains(k))
+                    matrixSudoku[i][j].setText(null);
+            }
+        }
+        
+        
+        //Preparando o oitavo quadrante
+        vAux = new ArrayList();
+        for(i = 1; i <= 9; i++)
+            characters.add(i);
+        numbersIn3x3 = rand.nextInt(8);
+        j = 0;
+
+        for(i = 0; i < numbersIn3x3; i++){
+            j = rand.nextInt(characters.size());
+            vAux.add(characters.get(j));
+            characters.remove(characters.get(j));
+            j++;
+        }
+
+        for(i = 6; i < 9; i++){
+            for(j = 3; j < 6; j++){
+                k = Integer.parseInt(matrixSudoku[i][j].getText());
+                if(!vAux.contains(k))
+                    matrixSudoku[i][j].setText(null);
+            }
+        }
+        
+        
+        //Preparando o nono quadrante
+        vAux = new ArrayList();
+        for(i = 1; i <= 9; i++)
+            characters.add(i);
+        numbersIn3x3 = rand.nextInt(8);
+        j = 0;
+
+        for(i = 0; i < numbersIn3x3; i++){
+            j = rand.nextInt(characters.size());
+            vAux.add(characters.get(j));
+            characters.remove(characters.get(j));
+            j++;
+        }
+
+        for(i = 6; i < 9; i++){
+            for(j = 6; j < 9; j++){
+                k = Integer.parseInt(matrixSudoku[i][j].getText());
+                if(!vAux.contains(k))
+                    matrixSudoku[i][j].setText(null);
+            }
+        }
+        
     }
     
     private static void changeLine(int[][] sudoku, int line1, int line2) {
