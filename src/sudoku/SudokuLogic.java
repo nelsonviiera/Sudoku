@@ -39,7 +39,7 @@ public class SudokuLogic {
     }
     
     public static void checkLine(JTextFieldOnlyNumbers[][] matrixSudoku, int line) {
-        
+        System.out.println("Linha: " + line);
     }
     
     public static void checkColumn(JTextFieldOnlyNumbers[][] matrixSudoku, int column) {
