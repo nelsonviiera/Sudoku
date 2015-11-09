@@ -37,78 +37,114 @@ public class SudokuLogic {
         for(int i = 0; i < 9; i++){
             for(int j = 0; j < 9; j++){
                 matrixSudoku[i][j].setText(String.valueOf(sudokuAux[i][j]));
+                System.out.print(matrixSudoku[i][j].getText() + " ");
             }
+            System.out.println("");
         }
     }
     
-    public static void checkLine(JTextFieldOnlyNumbers[][] matrixSudoku, int line, int column) {
+    private static boolean checkLine(JTextFieldOnlyNumbers[][] matrixSudoku, int line, int column) {
+        int sum = 0, valor = 0;
         for(scrollColumn = 0; scrollColumn < 9; scrollColumn++) {
             if(scrollColumn == column)
                 scrollColumn++;
             if(scrollColumn < 9) {
-                if(matrixSudoku[line][scrollColumn].getText().equals(matrixSudoku[line][column].getText()))
+                if(matrixSudoku[line][scrollColumn].getText().equals(matrixSudoku[line][column].getText())) {
                     matrixSudoku[line][column].setForeground(Color.red);
+                    return false;
+                }
+                if(!(matrixSudoku[line][scrollColumn] == null)) {
+                    valor = Integer.valueOf(matrixSudoku[line][scrollColumn].getText());
+                    sum = sum + valor;
+                }
             }
         }
+        return sum == 45;
     }
     
-    public static void checkColumn(JTextFieldOnlyNumbers[][] matrixSudoku, int line, int column) {
+    private static boolean checkColumn(JTextFieldOnlyNumbers[][] matrixSudoku, int line, int column) {
+        int sum = 0, valor = 0;
         for(scrollLine = 0; scrollLine < 9; scrollLine++) {
             if(scrollLine == line)
                 scrollLine++;
             if(scrollLine < 9) {
-                if(matrixSudoku[scrollLine][column].getText().equals(matrixSudoku[scrollLine][column].getText()))
+                if(matrixSudoku[scrollLine][column].getText().equals(matrixSudoku[line][column].getText())) {
                     matrixSudoku[line][column].setForeground(Color.red);
+                    return false;
+                }
+                if(!(matrixSudoku[scrollLine][column] == null)) {
+                    valor = Integer.valueOf(matrixSudoku[scrollLine][column].getText());
+                    sum = sum + valor;
+                }
             }
         }
+        return sum == 45;
     }
     
-    public static void checkMatrix3x3(JTextFieldOnlyNumbers[][] matrixSudoku, int line, int column, int lineMatrix3x3, int columnMatrix3x3) {
+    private static boolean checkMatrix3x3(JTextFieldOnlyNumbers[][] matrixSudoku, int line, int column, int lineMatrix3x3, int columnMatrix3x3) {
+        int sum = 0, valor = 0;
         for(scrollLine = lineMatrix3x3; scrollLine < lineMatrix3x3 + 3; scrollLine++) {
             for(scrollColumn = columnMatrix3x3; scrollColumn < columnMatrix3x3 + 3; scrollColumn++) {
                 if(scrollLine == line && scrollColumn == column)
                     scrollColumn++;
                 if(scrollColumn < columnMatrix3x3 + 3) {
-                    if(matrixSudoku[scrollLine][scrollColumn].getText().equals(matrixSudoku[line][column].getText()))
+                    if(matrixSudoku[scrollLine][scrollColumn].getText().equals(matrixSudoku[line][column].getText())) {
                         matrixSudoku[line][column].setForeground(Color.red);
+                        return false;
+                    }
+                } if(!(matrixSudoku[scrollLine][scrollColumn] == null)) {
+                    valor = Integer.valueOf(matrixSudoku[scrollLine][scrollColumn].getText());
+                    sum = sum + valor;
                 }
             }
         }
+        return sum == 45;
     }
     
-    public static void checkSudoku(JTextFieldOnlyNumbers[][] matrixSudoku, int line, int column) {
-        checkLine(matrixSudoku, line, column);
-        checkColumn(matrixSudoku, line, column);
+    
+    public static boolean checkSudoku(JTextFieldOnlyNumbers[][] matrixSudoku, int line, int column, int amountNumbersSudoku) {
+        boolean validateMatrix3x3, validateLine, validateColumn;
+        validateLine = checkLine(matrixSudoku, line, column);
+        validateColumn = checkColumn(matrixSudoku, line, column);
 
         if(line < 3) {
             if(column < 3)
-                checkMatrix3x3(matrixSudoku, line, column, 0, 0);
+                validateMatrix3x3 = checkMatrix3x3(matrixSudoku, line, column, 0, 0);
             else if (column >=3 && column < 6)
-                checkMatrix3x3(matrixSudoku, line, column, 0, 3);
+                validateMatrix3x3 = checkMatrix3x3(matrixSudoku, line, column, 0, 3);
             else
-                checkMatrix3x3(matrixSudoku, line, column, 0, 6);
+                validateMatrix3x3 = checkMatrix3x3(matrixSudoku, line, column, 0, 6);
         } else if (line >=3 && line < 6) {
             if(column < 3)
-                checkMatrix3x3(matrixSudoku, line, column, 3, 0);
+                validateMatrix3x3 = checkMatrix3x3(matrixSudoku, line, column, 3, 0);
             else if (column >=3 && column < 6)
-                checkMatrix3x3(matrixSudoku, line, column, 3, 3);
+                validateMatrix3x3 = checkMatrix3x3(matrixSudoku, line, column, 3, 3);
             else
-                checkMatrix3x3(matrixSudoku, line, column, 3, 6);
+                validateMatrix3x3 = checkMatrix3x3(matrixSudoku, line, column, 3, 6);
         } else {
             if(column < 3)
-                checkMatrix3x3(matrixSudoku, line, column, 6, 0);
+                validateMatrix3x3 = checkMatrix3x3(matrixSudoku, line, column, 6, 0);
             else if (column >=3 && column < 6)
-                checkMatrix3x3(matrixSudoku, line, column, 6, 3);
+                validateMatrix3x3 = checkMatrix3x3(matrixSudoku, line, column, 6, 3);
             else
-                checkMatrix3x3(matrixSudoku, line, column, 6, 6);
+                validateMatrix3x3 = checkMatrix3x3(matrixSudoku, line, column, 6, 6);
         }
+        
+        if(amountNumbersSudoku >= 81) {
+            System.out.println("If 81");
+            if((validateLine == true) && (validateColumn == true) && (validateMatrix3x3 == true))
+                System.out.println("true");
+                return true;
+        }
+        return false;
     }
     
-    public static void removeSomeNumbers(JTextFieldOnlyNumbers[][] matrixSudoku){
+    public static int removeSomeNumbers(JTextFieldOnlyNumbers[][] matrixSudoku){
+        int amountNumbersSudoku = 0;
         Random rand = new Random();
         int numbersIn3x3 = rand.nextInt(8);
         ArrayList vAux = new ArrayList();
-        int i, j = 0, k;
+        int i, j, k;
         
         ArrayList characters = new ArrayList();
         for(i = 1; i <= 9; i++)
@@ -126,8 +162,10 @@ public class SudokuLogic {
                 k = Integer.parseInt(matrixSudoku[i][j].getText());
                 if(!vAux.contains(k))
                     matrixSudoku[i][j].setText(null);
-                else
+                else {
                     matrixSudoku[i][j].setEditable(false);
+                    amountNumbersSudoku++;
+                }
             }
         }
 
@@ -149,8 +187,10 @@ public class SudokuLogic {
                 k = Integer.parseInt(matrixSudoku[i][j].getText());
                 if(!vAux.contains(k))
                     matrixSudoku[i][j].setText(null);
-                else
+                else {
                     matrixSudoku[i][j].setEditable(false);
+                    amountNumbersSudoku++;
+                }
             }
         }
         
@@ -159,7 +199,6 @@ public class SudokuLogic {
         for(i = 1; i <= 9; i++)
             characters.add(i);
         numbersIn3x3 = rand.nextInt(8);
-        j = 0;
 
         for(i = 0; i < numbersIn3x3; i++){
             j = rand.nextInt(characters.size());
@@ -173,8 +212,10 @@ public class SudokuLogic {
                 k = Integer.parseInt(matrixSudoku[i][j].getText());
                 if(!vAux.contains(k))
                     matrixSudoku[i][j].setText(null);
-                else
+                else {
                     matrixSudoku[i][j].setEditable(false);
+                    amountNumbersSudoku++;
+                }
             }
         }
         
@@ -183,7 +224,6 @@ public class SudokuLogic {
         for(i = 1; i <= 9; i++)
             characters.add(i);
         numbersIn3x3 = rand.nextInt(8);
-        j = 0;
 
         for(i = 0; i < numbersIn3x3; i++){
             j = rand.nextInt(characters.size());
@@ -197,8 +237,10 @@ public class SudokuLogic {
                 k = Integer.parseInt(matrixSudoku[i][j].getText());
                 if(!vAux.contains(k))
                     matrixSudoku[i][j].setText(null);
-                else
+                else {
                     matrixSudoku[i][j].setEditable(false);
+                    amountNumbersSudoku++;
+                }
             }
         }
         
@@ -207,7 +249,6 @@ public class SudokuLogic {
         for(i = 1; i <= 9; i++)
             characters.add(i);
         numbersIn3x3 = rand.nextInt(8);
-        j = 0;
 
         for(i = 0; i < numbersIn3x3; i++){
             j = rand.nextInt(characters.size());
@@ -221,8 +262,10 @@ public class SudokuLogic {
                 k = Integer.parseInt(matrixSudoku[i][j].getText());
                 if(!vAux.contains(k))
                     matrixSudoku[i][j].setText(null);
-                else
+                else {
                     matrixSudoku[i][j].setEditable(false);
+                    amountNumbersSudoku++;
+                }
             }
         }
         
@@ -231,7 +274,6 @@ public class SudokuLogic {
         for(i = 1; i <= 9; i++)
             characters.add(i);
         numbersIn3x3 = rand.nextInt(8);
-        j = 0;
 
         for(i = 0; i < numbersIn3x3; i++){
             j = rand.nextInt(characters.size());
@@ -245,8 +287,10 @@ public class SudokuLogic {
                 k = Integer.parseInt(matrixSudoku[i][j].getText());
                 if(!vAux.contains(k))
                     matrixSudoku[i][j].setText(null);
-                else
+                else {
                     matrixSudoku[i][j].setEditable(false);
+                    amountNumbersSudoku++;
+                }
             }
         }
         
@@ -255,7 +299,6 @@ public class SudokuLogic {
         for(i = 1; i <= 9; i++)
             characters.add(i);
         numbersIn3x3 = rand.nextInt(8);
-        j = 0;
 
         for(i = 0; i < numbersIn3x3; i++){
             j = rand.nextInt(characters.size());
@@ -269,8 +312,10 @@ public class SudokuLogic {
                 k = Integer.parseInt(matrixSudoku[i][j].getText());
                 if(!vAux.contains(k))
                     matrixSudoku[i][j].setText(null);
-                else
+                else {
                     matrixSudoku[i][j].setEditable(false);
+                    amountNumbersSudoku++;
+                }
             }
         }
         
@@ -279,7 +324,6 @@ public class SudokuLogic {
         for(i = 1; i <= 9; i++)
             characters.add(i);
         numbersIn3x3 = rand.nextInt(8);
-        j = 0;
 
         for(i = 0; i < numbersIn3x3; i++){
             j = rand.nextInt(characters.size());
@@ -293,8 +337,10 @@ public class SudokuLogic {
                 k = Integer.parseInt(matrixSudoku[i][j].getText());
                 if(!vAux.contains(k))
                     matrixSudoku[i][j].setText(null);
-                else
+                else {
                     matrixSudoku[i][j].setEditable(false);
+                    amountNumbersSudoku++;
+                }
             }
         }
         
@@ -303,7 +349,6 @@ public class SudokuLogic {
         for(i = 1; i <= 9; i++)
             characters.add(i);
         numbersIn3x3 = rand.nextInt(8);
-        j = 0;
 
         for(i = 0; i < numbersIn3x3; i++){
             j = rand.nextInt(characters.size());
@@ -317,11 +362,13 @@ public class SudokuLogic {
                 k = Integer.parseInt(matrixSudoku[i][j].getText());
                 if(!vAux.contains(k))
                     matrixSudoku[i][j].setText(null);
-                else
+                else {
                     matrixSudoku[i][j].setEditable(false);
+                    amountNumbersSudoku++;
+                }
             }
         }
-        
+        return amountNumbersSudoku;
     }
     
     private static void changeLine(int[][] sudoku, int line1, int line2) {

@@ -27,7 +27,8 @@ public class SudokuFrame{
     private JPanel p1JPanel;
     private JPanel p2JPanel;
     private JFrame mainFrame;
-    private int scrollLine, scrollColumn;
+    private int scrollLine, scrollColumn, amountNumbersSudoku;
+    private boolean finish;
 
     public SudokuFrame() {
         this.newGameJButton = new JButton("Novo Jogo");
@@ -35,9 +36,12 @@ public class SudokuFrame{
         this.p1JPanel = new JPanel();
         this.p2JPanel = new JPanel();
         this.mainFrame = new JFrame("Sudoku");
+        setFinish(false);
+        setAmountNumbersSudoku(0);
     }
     
     private void init() {
+        p1JPanel.removeAll();
         for(scrollLine = 0; scrollLine < 9; scrollLine++){
             for(scrollColumn = 0; scrollColumn < 9; scrollColumn++){
                 final JTextFieldOnlyNumbers matrixCell = new JTextFieldOnlyNumbers();
@@ -60,13 +64,28 @@ public class SudokuFrame{
                 });
                 
                 matrixCell.addKeyListener(new KeyAdapter() {
+                    @Override
                     public void keyPressed(KeyEvent event) {
                         if(event.getKeyCode() == KeyEvent.VK_ENTER) {
-                            SudokuLogic.checkSudoku(matrixSudoku, matrixCell.getLine(), matrixCell.getColumn());
-                            
+                            setAmountNumbersSudoku(getAmountNumbersSudoku() + 1);
+                            setFinish(SudokuLogic.checkSudoku(matrixSudoku, matrixCell.getLine(), matrixCell.getColumn(), amountNumbersSudoku));
+                            System.out.println("Quantidade de elementos: " + amountNumbersSudoku);
                         }
-                        if(event.getKeyCode() == KeyEvent.VK_BACK_SPACE)
+                        if(event.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+                            setAmountNumbersSudoku(getAmountNumbersSudoku() - 1);
                             matrixCell.setForeground(Color.black);
+                            System.out.println("Quantidade de elementos: " + amountNumbersSudoku);
+                        }
+                        if(getAmountNumbersSudoku() >= 81) {
+                            if(isFinish()) {
+                                System.out.println("Ganhou!");
+                                JOptionPane.showMessageDialog(p1JPanel, "Parabéns, você realizou o sudoku com êxito. Para jogar novamente, utilize o botão Novo Jogo");
+                                p1JPanel.setEnabled(false);
+                                new SudokuFrame();
+                                init();
+                                game();
+                            }
+                        }
                     }
                 });
                 
@@ -96,9 +115,8 @@ public class SudokuFrame{
             public void actionPerformed(ActionEvent e) {
                 int op = JOptionPane.showConfirmDialog(null, "Deseja iniciar um novo jogo?", "", JOptionPane.YES_NO_OPTION);
                 if (op == JOptionPane.YES_OPTION) {
-                    p1JPanel.removeAll();
                     init();
-                    Game();
+                    game();
                 }
             }
         });
@@ -180,15 +198,33 @@ public class SudokuFrame{
         }
     }
     
-    private void Game() {
+    private void game() {
         SudokuLogic.generateRandomNumber(matrixSudoku);
-        SudokuLogic.removeSomeNumbers(matrixSudoku);
+        setAmountNumbersSudoku(SudokuLogic.removeSomeNumbers(matrixSudoku));
     }
+
+    public boolean isFinish() {
+        return finish;
+    }
+
+    public void setFinish(boolean finish) {
+        this.finish = finish;
+    }
+
+    public int getAmountNumbersSudoku() {
+        return amountNumbersSudoku;
+    }
+
+    public void setAmountNumbersSudoku(int amountNumbersSudoku) {
+        this.amountNumbersSudoku = amountNumbersSudoku;
+    }
+    
+    
     
     public static void main(String[] args) {
         SudokuFrame sudoku = new SudokuFrame();
         sudoku.init();
-        sudoku.Game();
+        sudoku.game();
     }
 
 }
