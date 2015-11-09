@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -57,6 +59,17 @@ public class SudokuFrame{
                     }
                 });
                 
+                matrixCell.addKeyListener(new KeyAdapter() {
+                    public void keyPressed(KeyEvent event) {
+                        if(event.getKeyCode() == KeyEvent.VK_ENTER) {
+                            SudokuLogic.checkSudoku(matrixSudoku, matrixCell.getLine(), matrixCell.getColumn());
+                            
+                        }
+                        if(event.getKeyCode() == KeyEvent.VK_BACK_SPACE)
+                            matrixCell.setForeground(Color.black);
+                    }
+                });
+                
                 matrixSudoku[scrollLine][scrollColumn] = matrixCell;
 		p1JPanel.add(matrixSudoku[scrollLine][scrollColumn]);
             }
@@ -82,8 +95,11 @@ public class SudokuFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 int op = JOptionPane.showConfirmDialog(null, "Deseja iniciar um novo jogo?", "", JOptionPane.YES_NO_OPTION);
-                if (op == JOptionPane.YES_OPTION)
+                if (op == JOptionPane.YES_OPTION) {
+                    p1JPanel.removeAll();
+                    init();
                     Game();
+                }
             }
         });
     }
