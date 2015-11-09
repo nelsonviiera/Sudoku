@@ -10,9 +10,9 @@ import java.util.Random;
  */
 public class SudokuLogic {
     
-    private static int scrollLine, scrollColumn;
+    private int scrollLine, scrollColumn;
 
-    public static void generateRandomNumber(JTextFieldOnlyNumbers[][] matrixSudoku) {
+    public void generateRandomNumber(JTextFieldOnlyNumbers[][] matrixSudoku) {
         Random rand = new Random();
         int n = 3;
         final int[][] sudokuAux = new int[n*n][n*n];
@@ -43,94 +43,67 @@ public class SudokuLogic {
         }
     }
     
-    private static boolean checkLine(JTextFieldOnlyNumbers[][] matrixSudoku, int line, int column) {
-        int sum = 0, valor = 0;
+    private void checkLine(JTextFieldOnlyNumbers[][] matrixSudoku, int line, int column) {
         for(scrollColumn = 0; scrollColumn < 9; scrollColumn++) {
             if(scrollColumn == column)
                 scrollColumn++;
             if(scrollColumn < 9) {
-                if(matrixSudoku[line][scrollColumn].getText().equals(matrixSudoku[line][column].getText())) {
+                if(matrixSudoku[line][scrollColumn].getText().equals(matrixSudoku[line][column].getText()))
                     matrixSudoku[line][column].setForeground(Color.red);
-                    return false;
-                }
-                if((!matrixSudoku[line][scrollColumn].getText().equals(""))) {
-                    valor = Integer.parseInt(String.valueOf(matrixSudoku[line][scrollColumn].getText()));
-                    sum = sum + valor;
-                }
             }
         }
-        return sum == 45;
     }
     
-    private static boolean checkColumn(JTextFieldOnlyNumbers[][] matrixSudoku, int line, int column) {
-        int sum = 0, valor = 0;
+    private void checkColumn(JTextFieldOnlyNumbers[][] matrixSudoku, int line, int column) {
         for(scrollLine = 0; scrollLine < 9; scrollLine++) {
             if(scrollLine == line)
                 scrollLine++;
             if(scrollLine < 9) {
-                if(matrixSudoku[scrollLine][column].getText().equals(matrixSudoku[line][column].getText())) {
+                if(matrixSudoku[scrollLine][column].getText().equals(matrixSudoku[line][column].getText()))
                     matrixSudoku[line][column].setForeground(Color.red);
-                    return false;
-                }
-                if((!matrixSudoku[scrollLine][column].getText().equals(""))) {
-                    valor = Integer.parseInt(String.valueOf(matrixSudoku[scrollLine][column].getText()));
-                    sum = sum + valor;
-                }
             }
         }
-        return sum == 45;
     }
     
-    private static boolean checkMatrix3x3(JTextFieldOnlyNumbers[][] matrixSudoku, int line, int column, int lineMatrix3x3, int columnMatrix3x3) {
-        int sum = 0, valor = 0;
+    private void checkMatrix3x3(JTextFieldOnlyNumbers[][] matrixSudoku, int line, int column, int lineMatrix3x3, int columnMatrix3x3) {
         for(scrollLine = lineMatrix3x3; scrollLine < lineMatrix3x3 + 3; scrollLine++) {
             for(scrollColumn = columnMatrix3x3; scrollColumn < columnMatrix3x3 + 3; scrollColumn++) {
                 if(scrollLine == line && scrollColumn == column)
                     scrollColumn++;
                 if(scrollColumn < columnMatrix3x3 + 3) {
-                    if(matrixSudoku[scrollLine][scrollColumn].getText().equals(matrixSudoku[line][column].getText())) {
+                    if(matrixSudoku[scrollLine][scrollColumn].getText().equals(matrixSudoku[line][column].getText()))
                         matrixSudoku[line][column].setForeground(Color.red);
-                        return false;
-                    }
-                }
-                if(scrollColumn == 9)
-                    scrollColumn--;
-                if((!matrixSudoku[scrollLine][scrollColumn].getText().equals(""))) {
-                    valor = Integer.parseInt(String.valueOf(matrixSudoku[scrollLine][scrollColumn].getText()));
-                    sum = sum + valor;
                 }
             }
         }
-        return sum == 45;
     }
     
     
-    public static boolean checkSudoku(JTextFieldOnlyNumbers[][] matrixSudoku, int line, int column, int amountNumbersSudoku) {
-        boolean validateMatrix3x3, validateLine, validateColumn;
-        validateLine = checkLine(matrixSudoku, line, column);
-        validateColumn = checkColumn(matrixSudoku, line, column);
+    public boolean checkSudoku(JTextFieldOnlyNumbers[][] matrixSudoku, int line, int column, int amountNumbersSudoku) {
+        checkLine(matrixSudoku, line, column);
+        checkColumn(matrixSudoku, line, column);
 
         if(line < 3) {
             if(column < 3)
-                validateMatrix3x3 = checkMatrix3x3(matrixSudoku, line, column, 0, 0);
+                checkMatrix3x3(matrixSudoku, line, column, 0, 0);
             else if (column >=3 && column < 6)
-                validateMatrix3x3 = checkMatrix3x3(matrixSudoku, line, column, 0, 3);
+                checkMatrix3x3(matrixSudoku, line, column, 0, 3);
             else
-                validateMatrix3x3 = checkMatrix3x3(matrixSudoku, line, column, 0, 6);
+                checkMatrix3x3(matrixSudoku, line, column, 0, 6);
         } else if (line >=3 && line < 6) {
             if(column < 3)
-                validateMatrix3x3 = checkMatrix3x3(matrixSudoku, line, column, 3, 0);
+                checkMatrix3x3(matrixSudoku, line, column, 3, 0);
             else if (column >=3 && column < 6)
-                validateMatrix3x3 = checkMatrix3x3(matrixSudoku, line, column, 3, 3);
+                checkMatrix3x3(matrixSudoku, line, column, 3, 3);
             else
-                validateMatrix3x3 = checkMatrix3x3(matrixSudoku, line, column, 3, 6);
+                checkMatrix3x3(matrixSudoku, line, column, 3, 6);
         } else {
             if(column < 3)
-                validateMatrix3x3 = checkMatrix3x3(matrixSudoku, line, column, 6, 0);
+                checkMatrix3x3(matrixSudoku, line, column, 6, 0);
             else if (column >=3 && column < 6)
-                validateMatrix3x3 = checkMatrix3x3(matrixSudoku, line, column, 6, 3);
+                checkMatrix3x3(matrixSudoku, line, column, 6, 3);
             else
-                validateMatrix3x3 = checkMatrix3x3(matrixSudoku, line, column, 6, 6);
+                checkMatrix3x3(matrixSudoku, line, column, 6, 6);
         }
         
         if(amountNumbersSudoku >= 81) {
@@ -145,7 +118,7 @@ public class SudokuLogic {
         return false;
     }
     
-    public static int removeSomeNumbers(JTextFieldOnlyNumbers[][] matrixSudoku){
+    public int removeSomeNumbers(JTextFieldOnlyNumbers[][] matrixSudoku){
         int amountNumbersSudoku = 0;
         Random rand = new Random();
         int numbersIn3x3 = rand.nextInt(8);
@@ -179,7 +152,6 @@ public class SudokuLogic {
         for(i = 1; i <= 9; i++)
             characters.add(i);
         numbersIn3x3 = rand.nextInt(8);
-        j = 0;
 
         for(i = 0; i < numbersIn3x3; i++){
             j = rand.nextInt(characters.size());
@@ -377,7 +349,7 @@ public class SudokuLogic {
         return amountNumbersSudoku;
     }
     
-    private static void changeLine(int[][] sudoku, int line1, int line2) {
+    private void changeLine(int[][] sudoku, int line1, int line2) {
         int aux;
         for(int i = 0; i < 9; i++) {
             aux = sudoku[line1][i];
@@ -386,7 +358,7 @@ public class SudokuLogic {
         }
     }
     
-    private static void changeColumn(int[][] sudoku, int column1, int column2) {
+    private void changeColumn(int[][] sudoku, int column1, int column2) {
         int aux;
         for(int i = 0; i < 9; i++) {
             aux = sudoku[i][column1];
@@ -395,7 +367,7 @@ public class SudokuLogic {
         }
     }
     
-    private static void changeBlock3x9(int[][] sudoku, int line1, int line2) {
+    private void changeBlock3x9(int[][] sudoku, int line1, int line2) {
         int aux;
         int column2 = 0;
         for(int i = line1; i < line1 + 3; i++) {

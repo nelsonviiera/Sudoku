@@ -29,6 +29,7 @@ public class SudokuFrame{
     private JFrame mainFrame;
     private int scrollLine, scrollColumn, amountNumbersSudoku;
     private boolean finish;
+    private SudokuLogic sudokuLogic;
 
     public SudokuFrame() {
         this.newGameJButton = new JButton("Novo Jogo");
@@ -36,6 +37,7 @@ public class SudokuFrame{
         this.p1JPanel = new JPanel();
         this.p2JPanel = new JPanel();
         this.mainFrame = new JFrame("Sudoku");
+        this.sudokuLogic = new SudokuLogic();
         setFinish(false);
         setAmountNumbersSudoku(0);
     }
@@ -69,7 +71,7 @@ public class SudokuFrame{
                     public void keyPressed(KeyEvent event) {
                         if(event.getKeyCode() == KeyEvent.VK_ENTER) {
                             setAmountNumbersSudoku(getAmountNumbersSudoku() + 1);
-                            setFinish(SudokuLogic.checkSudoku(matrixSudoku, matrixCell.getLine(), matrixCell.getColumn(), amountNumbersSudoku));
+                            setFinish(sudokuLogic.checkSudoku(matrixSudoku, matrixCell.getLine(), matrixCell.getColumn(), amountNumbersSudoku));
                             System.out.println("Quantidade de elementos: " + amountNumbersSudoku);
                         }
                         if(event.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
@@ -201,8 +203,8 @@ public class SudokuFrame{
     }
     
     private void game() {
-        SudokuLogic.generateRandomNumber(matrixSudoku);
-        setAmountNumbersSudoku(SudokuLogic.removeSomeNumbers(matrixSudoku));
+        sudokuLogic.generateRandomNumber(matrixSudoku);
+        setAmountNumbersSudoku(sudokuLogic.removeSomeNumbers(matrixSudoku));
     }
 
     public boolean isFinish() {
