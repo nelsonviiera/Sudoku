@@ -22,14 +22,15 @@ import javax.swing.border.LineBorder;
  */
 public class SudokuFrame{
 
-    private JButton newGameJButton;
     private JTextFieldOnlyNumbers[][] matrixSudoku;
     private JPanel p1JPanel;
     private JPanel p2JPanel;
     private JFrame mainFrame;
+    private JButton newGameJButton;
+    private SudokuLogic sudokuLogic;
+    private Player player;
     private int scrollLine, scrollColumn, amountNumbersSudoku;
     private boolean finish;
-    private SudokuLogic sudokuLogic;
 
     public SudokuFrame() {
         this.newGameJButton = new JButton("Novo Jogo");
@@ -38,6 +39,8 @@ public class SudokuFrame{
         this.p2JPanel = new JPanel();
         this.mainFrame = new JFrame("Sudoku");
         this.sudokuLogic = new SudokuLogic();
+        this.player = new Player();
+        player.setNome("Yudi");
         setFinish(false);
         setAmountNumbersSudoku(0);
     }
@@ -82,7 +85,7 @@ public class SudokuFrame{
                         if(getAmountNumbersSudoku() >= 81) {
                             if(isFinish()) {
                                 System.out.println("Ganhou!");
-                                JOptionPane.showMessageDialog(p1JPanel, "Parabéns, você realizou o sudoku com êxito. Para jogar novamente, utilize o botão Novo Jogo");
+                                JOptionPane.showMessageDialog(p1JPanel, "Parabéns " + player.getNome() +", para jogar novamente, clique em OK e Novo Jogo");
                                 p1JPanel.setEnabled(false);
                                 mainFrame.dispose();
                                 init();
@@ -222,8 +225,6 @@ public class SudokuFrame{
     public void setAmountNumbersSudoku(int amountNumbersSudoku) {
         this.amountNumbersSudoku = amountNumbersSudoku;
     }
-    
-    
     
     public static void main(String[] args) {
         SudokuFrame sudoku = new SudokuFrame();

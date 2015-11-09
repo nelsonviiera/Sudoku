@@ -11,7 +11,7 @@ import java.util.Random;
 public class SudokuLogic {
     
     private int scrollLine, scrollColumn;
-
+    
     public void generateRandomNumber(JTextFieldOnlyNumbers[][] matrixSudoku) {
         Random rand = new Random();
         int n = 3;
@@ -43,81 +43,40 @@ public class SudokuLogic {
         }
     }
     
-    private void checkLine(JTextFieldOnlyNumbers[][] matrixSudoku, int line, int column) {
-        for(scrollColumn = 0; scrollColumn < 9; scrollColumn++) {
-            if(scrollColumn == column)
-                scrollColumn++;
-            if(scrollColumn < 9) {
-                if(matrixSudoku[line][scrollColumn].getText().equals(matrixSudoku[line][column].getText()))
-                    matrixSudoku[line][column].setForeground(Color.red);
-            }
+    private void changeLine(int[][] sudoku, int line1, int line2) {
+        int aux;
+        for(int i = 0; i < 9; i++) {
+            aux = sudoku[line1][i];
+            sudoku[line1][i] = sudoku[line2][i];
+            sudoku[line2][i] = aux;
         }
     }
     
-    private void checkColumn(JTextFieldOnlyNumbers[][] matrixSudoku, int line, int column) {
-        for(scrollLine = 0; scrollLine < 9; scrollLine++) {
-            if(scrollLine == line)
-                scrollLine++;
-            if(scrollLine < 9) {
-                if(matrixSudoku[scrollLine][column].getText().equals(matrixSudoku[line][column].getText()))
-                    matrixSudoku[line][column].setForeground(Color.red);
-            }
+    private void changeColumn(int[][] sudoku, int column1, int column2) {
+        int aux;
+        for(int i = 0; i < 9; i++) {
+            aux = sudoku[i][column1];
+            sudoku[i][column1] = sudoku[i][column2];
+            sudoku[i][column2] = aux;
         }
     }
     
-    private void checkMatrix3x3(JTextFieldOnlyNumbers[][] matrixSudoku, int line, int column, int lineMatrix3x3, int columnMatrix3x3) {
-        for(scrollLine = lineMatrix3x3; scrollLine < lineMatrix3x3 + 3; scrollLine++) {
-            for(scrollColumn = columnMatrix3x3; scrollColumn < columnMatrix3x3 + 3; scrollColumn++) {
-                if(scrollLine == line && scrollColumn == column)
-                    scrollColumn++;
-                if(scrollColumn < columnMatrix3x3 + 3) {
-                    if(matrixSudoku[scrollLine][scrollColumn].getText().equals(matrixSudoku[line][column].getText()))
-                        matrixSudoku[line][column].setForeground(Color.red);
+    private void changeBlock3x9(int[][] sudoku, int line1, int line2) {
+        int aux;
+        int column2 = 0;
+        for(int i = line1; i < line1 + 3; i++) {
+            for(int j = 0; j < 9; j++) {
+                aux = sudoku[i][j];
+                sudoku[i][j] = sudoku[line2][column2];
+                sudoku[line2][column2++] = aux;
+                if(column2 == 9) {
+                    line2++;
+                    column2 = 0;
                 }
             }
         }
     }
-    
-    
-    public boolean checkSudoku(JTextFieldOnlyNumbers[][] matrixSudoku, int line, int column, int amountNumbersSudoku) {
-        checkLine(matrixSudoku, line, column);
-        checkColumn(matrixSudoku, line, column);
 
-        if(line < 3) {
-            if(column < 3)
-                checkMatrix3x3(matrixSudoku, line, column, 0, 0);
-            else if (column >=3 && column < 6)
-                checkMatrix3x3(matrixSudoku, line, column, 0, 3);
-            else
-                checkMatrix3x3(matrixSudoku, line, column, 0, 6);
-        } else if (line >=3 && line < 6) {
-            if(column < 3)
-                checkMatrix3x3(matrixSudoku, line, column, 3, 0);
-            else if (column >=3 && column < 6)
-                checkMatrix3x3(matrixSudoku, line, column, 3, 3);
-            else
-                checkMatrix3x3(matrixSudoku, line, column, 3, 6);
-        } else {
-            if(column < 3)
-                checkMatrix3x3(matrixSudoku, line, column, 6, 0);
-            else if (column >=3 && column < 6)
-                checkMatrix3x3(matrixSudoku, line, column, 6, 3);
-            else
-                checkMatrix3x3(matrixSudoku, line, column, 6, 6);
-        }
-        
-        if(amountNumbersSudoku >= 81) {
-            for(scrollLine = 0; scrollLine < 9; scrollLine++){
-                for(scrollColumn = 0; scrollColumn < 9; scrollColumn++){
-                    if(matrixSudoku[scrollLine][scrollColumn].getText().equals("") || matrixSudoku[scrollLine][scrollColumn].getForeground().equals(Color.red))
-                        return false;
-                }
-            }
-            return true;
-        }
-        return false;
-    }
-    
     public int removeSomeNumbers(JTextFieldOnlyNumbers[][] matrixSudoku){
         int amountNumbersSudoku = 0;
         Random rand = new Random();
@@ -349,35 +308,75 @@ public class SudokuLogic {
         return amountNumbersSudoku;
     }
     
-    private void changeLine(int[][] sudoku, int line1, int line2) {
-        int aux;
-        for(int i = 0; i < 9; i++) {
-            aux = sudoku[line1][i];
-            sudoku[line1][i] = sudoku[line2][i];
-            sudoku[line2][i] = aux;
+    public boolean checkSudoku(JTextFieldOnlyNumbers[][] matrixSudoku, int line, int column, int amountNumbersSudoku) {
+        checkLine(matrixSudoku, line, column);
+        checkColumn(matrixSudoku, line, column);
+
+        if(line < 3) {
+            if(column < 3)
+                checkMatrix3x3(matrixSudoku, line, column, 0, 0);
+            else if (column >=3 && column < 6)
+                checkMatrix3x3(matrixSudoku, line, column, 0, 3);
+            else
+                checkMatrix3x3(matrixSudoku, line, column, 0, 6);
+        } else if (line >=3 && line < 6) {
+            if(column < 3)
+                checkMatrix3x3(matrixSudoku, line, column, 3, 0);
+            else if (column >=3 && column < 6)
+                checkMatrix3x3(matrixSudoku, line, column, 3, 3);
+            else
+                checkMatrix3x3(matrixSudoku, line, column, 3, 6);
+        } else {
+            if(column < 3)
+                checkMatrix3x3(matrixSudoku, line, column, 6, 0);
+            else if (column >=3 && column < 6)
+                checkMatrix3x3(matrixSudoku, line, column, 6, 3);
+            else
+                checkMatrix3x3(matrixSudoku, line, column, 6, 6);
+        }
+        
+        if(amountNumbersSudoku >= 81) {
+            for(scrollLine = 0; scrollLine < 9; scrollLine++){
+                for(scrollColumn = 0; scrollColumn < 9; scrollColumn++){
+                    if(matrixSudoku[scrollLine][scrollColumn].getText().equals("") || matrixSudoku[scrollLine][scrollColumn].getForeground().equals(Color.red))
+                        return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+    
+    private void checkLine(JTextFieldOnlyNumbers[][] matrixSudoku, int line, int column) {
+        for(scrollColumn = 0; scrollColumn < 9; scrollColumn++) {
+            if(scrollColumn == column)
+                scrollColumn++;
+            if(scrollColumn < 9) {
+                if(matrixSudoku[line][scrollColumn].getText().equals(matrixSudoku[line][column].getText()))
+                    matrixSudoku[line][column].setForeground(Color.red);
+            }
         }
     }
     
-    private void changeColumn(int[][] sudoku, int column1, int column2) {
-        int aux;
-        for(int i = 0; i < 9; i++) {
-            aux = sudoku[i][column1];
-            sudoku[i][column1] = sudoku[i][column2];
-            sudoku[i][column2] = aux;
+    private void checkColumn(JTextFieldOnlyNumbers[][] matrixSudoku, int line, int column) {
+        for(scrollLine = 0; scrollLine < 9; scrollLine++) {
+            if(scrollLine == line)
+                scrollLine++;
+            if(scrollLine < 9) {
+                if(matrixSudoku[scrollLine][column].getText().equals(matrixSudoku[line][column].getText()))
+                    matrixSudoku[line][column].setForeground(Color.red);
+            }
         }
     }
     
-    private void changeBlock3x9(int[][] sudoku, int line1, int line2) {
-        int aux;
-        int column2 = 0;
-        for(int i = line1; i < line1 + 3; i++) {
-            for(int j = 0; j < 9; j++) {
-                aux = sudoku[i][j];
-                sudoku[i][j] = sudoku[line2][column2];
-                sudoku[line2][column2++] = aux;
-                if(column2 == 9) {
-                    line2++;
-                    column2 = 0;
+    private void checkMatrix3x3(JTextFieldOnlyNumbers[][] matrixSudoku, int line, int column, int lineMatrix3x3, int columnMatrix3x3) {
+        for(scrollLine = lineMatrix3x3; scrollLine < lineMatrix3x3 + 3; scrollLine++) {
+            for(scrollColumn = columnMatrix3x3; scrollColumn < columnMatrix3x3 + 3; scrollColumn++) {
+                if(scrollLine == line && scrollColumn == column)
+                    scrollColumn++;
+                if(scrollColumn < columnMatrix3x3 + 3) {
+                    if(matrixSudoku[scrollLine][scrollColumn].getText().equals(matrixSudoku[line][column].getText()))
+                        matrixSudoku[line][column].setForeground(Color.red);
                 }
             }
         }
