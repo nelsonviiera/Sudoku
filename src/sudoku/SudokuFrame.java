@@ -75,16 +75,13 @@ public class SudokuFrame{
                         if(event.getKeyCode() == KeyEvent.VK_ENTER) {
                             setAmountNumbersSudoku(getAmountNumbersSudoku() + 1);
                             setFinish(sudokuLogic.checkSudoku(matrixSudoku, matrixCell.getLine(), matrixCell.getColumn(), amountNumbersSudoku));
-                            System.out.println("Quantidade de elementos: " + amountNumbersSudoku);
                         }
                         if(event.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
                             setAmountNumbersSudoku(getAmountNumbersSudoku() - 1);
                             matrixCell.setForeground(Color.black);
-                            System.out.println("Quantidade de elementos: " + amountNumbersSudoku);
                         }
                         if(getAmountNumbersSudoku() >= 81) {
                             if(isFinish()) {
-                                System.out.println("Ganhou!");
                                 JOptionPane.showMessageDialog(p1JPanel, "Parabéns " + player.getNome() +", para jogar novamente, clique em OK e Novo Jogo");
                                 p1JPanel.setEnabled(false);
                                 mainFrame.dispose();
