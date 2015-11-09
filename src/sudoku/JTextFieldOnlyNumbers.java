@@ -4,8 +4,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.JTextField;
 
 public class JTextFieldOnlyNumbers extends JTextField {
-    private int maxCharacters = 1;
-    private int line, column;
+    private int maxCharacters = 1, line, column;
     
     public JTextFieldOnlyNumbers() {
         super();
@@ -29,6 +28,7 @@ public class JTextFieldOnlyNumbers extends JTextField {
     public int getMaxCharacters() {
         return maxCharacters;
     }
+    
     public void setMaxCharacters(int maxCharacters) {
         this.maxCharacters = maxCharacters;
     }
