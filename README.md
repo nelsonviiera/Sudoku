@@ -7,5 +7,5 @@ Repositório criado para o desenvolvimento do jogo como uma Atividade Prática S
 
 Desenvolvedores:
 
-    [Emerson Yudi Nakashima](https://github.com/emersonnaka);
+    Emerson Yudi Nakashima - https://github.com/emersonnaka;
     Nelson Vieira da Silva Junior.
