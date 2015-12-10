@@ -9,7 +9,7 @@ import java.util.Random;
  */
 public class MatrixSudoku extends Observable {
     
-    private int matrix[][] = new int[][] { {0, 0, 0}, {0, 0, 0}, {0, 0, 0} };;
+    private int matrix[][] = new int [9][9];
     private static MatrixSudoku instancia;
 
     private MatrixSudoku() {
