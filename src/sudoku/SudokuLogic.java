@@ -1,5 +1,6 @@
 package sudoku;
 
+import Model.JTextFieldOnlyNumbers;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Random;
@@ -81,10 +82,10 @@ public class SudokuLogic {
         int amountNumbersSudoku = 0;
         Random rand = new Random();
         int numbersIn3x3 = rand.nextInt(8);
-        ArrayList vAux = new ArrayList();
+        ArrayList<Integer> vAux = new ArrayList<>();
         int i, j, k;
         
-        ArrayList characters = new ArrayList();
+        ArrayList<Integer> characters = new ArrayList<>();
         for(i = 1; i <= 9; i++)
             characters.add(i);
         
