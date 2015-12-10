@@ -2,6 +2,11 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/home/yudi/UTFPR/Programação%20de%20Aplicativos/Sudoku/src/View/SudokuFrame.java</file>
+            <file>file:/home/yudi/UTFPR/Programação%20de%20Aplicativos/Sudoku/src/Model/MatrixSudoku.java</file>
+            <file>file:/home/yudi/UTFPR/Programação%20de%20Aplicativos/Sudoku/src/Controller/SudokuController.java</file>
+            <file>file:/home/yudi/UTFPR/Programação%20de%20Aplicativos/Sudoku/src/Controller/InterfaceController.java</file>
+        </group>
     </open-files>
 </project-private>
