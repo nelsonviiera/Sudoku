@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="1.0" xmlns="http://java.sun.com/xml/ns/persistence">
-    <persistence-unit name="sudoku">
+    <persistence-unit name="Sudoku">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
         <class>entities.Player</class>
         <properties>
@@ -13,7 +13,7 @@
             <property name="javax.persistence.jdbc.driver"
           value="com.mysql.jdbc.Driver" />
             <property name="javax.persistence.jdbc.url"
-          value="jdbc:mysql://localhost/aulaApp" />
+          value="jdbc:mysql://localhost/sudoku" />
             <property name="javax.persistence.jdbc.user" value="root" />
             <property name="javax.persistence.jdbc.password" value="root" />
         </properties>
