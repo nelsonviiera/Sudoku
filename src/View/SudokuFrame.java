@@ -128,6 +128,7 @@ public class SudokuFrame implements Observer {
             public void actionPerformed(ActionEvent e) {
                 int op = JOptionPane.showConfirmDialog(null, "Deseja iniciar um novo jogo?", "", JOptionPane.YES_NO_OPTION);
                 if (op == JOptionPane.YES_OPTION) {
+                    newGameJButton.removeActionListener(this);
                     mainFrame.dispose();
                     init();
                 }

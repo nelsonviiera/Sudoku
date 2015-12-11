@@ -35,7 +35,7 @@ public class Hibernate {
         ArrayList<Player> player = new ArrayList<>();
 
         em.getTransaction().begin();
-        Query q = em.createQuery("FROM Player as p ");
+        Query q = em.createQuery("FROM Player as p ORDER BY time");
         player = (ArrayList<Player>) q.getResultList();
         em.getTransaction().commit();
         em.close();

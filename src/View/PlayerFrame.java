@@ -6,6 +6,10 @@
 package View;
 
 import Controller.PlayerController;
+import Model.Hibernate;
+import Model.Player;
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
 /**
@@ -15,12 +19,16 @@ import javax.swing.JOptionPane;
 public class PlayerFrame extends javax.swing.JFrame {
 
     private PlayerController playerController;
-    /**
-     * Creates new form PlayerFrame
-     */
+    ArrayList <Player> rankingList;
+    DefaultListModel modelPlayer;
+    
     public PlayerFrame() {
         initComponents();
         playerController = new PlayerController();
+        rankingList = new ArrayList<>();
+        modelPlayer = new DefaultListModel();
+        this.RankingjList1.setModel(modelPlayer);
+        refreshRankingList();
     }
 
     /**
@@ -33,10 +41,14 @@ public class PlayerFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        TabsjTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        nameJTextField = new javax.swing.JTextField();
-        OkJButton = new javax.swing.JButton();
+        namejTextField = new javax.swing.JTextField();
+        OkjButton = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        RankingjList1 = new javax.swing.JList();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -51,20 +63,12 @@ public class PlayerFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Player"));
-
         jLabel1.setText("Nome:");
 
-        nameJTextField.addActionListener(new java.awt.event.ActionListener() {
+        OkjButton.setText("Ok");
+        OkjButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nameJTextFieldActionPerformed(evt);
-            }
-        });
-
-        OkJButton.setText("OK");
-        OkJButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                OkJButtonActionPerformed(evt);
+                OkjButtonActionPerformed(evt);
             }
         });
 
@@ -75,13 +79,12 @@ public class PlayerFrame extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(nameJTextField)
-                .addContainerGap())
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(167, 167, 167)
-                .addComponent(OkJButton)
-                .addContainerGap(169, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(namejTextField))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(164, Short.MAX_VALUE)
+                .addComponent(OkjButton, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(160, 160, 160))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -89,40 +92,58 @@ public class PlayerFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(nameJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(namejTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(OkJButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(OkjButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(62, Short.MAX_VALUE))
         );
+
+        TabsjTabbedPane1.addTab("Player", jPanel2);
+
+        RankingjList1.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane1.setViewportView(RankingjList1);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 396, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
+        );
+
+        TabsjTabbedPane1.addTab("Ranking", jPanel3);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(TabsjTabbedPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(TabsjTabbedPane1)
         );
 
-        setSize(new java.awt.Dimension(410, 138));
+        setSize(new java.awt.Dimension(410, 228));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void nameJTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameJTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nameJTextFieldActionPerformed
-
-    private void OkJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OkJButtonActionPerformed
-        if (!playerController.setPlayer(nameJTextField.getText()))
+    private void OkjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OkjButtonActionPerformed
+        if(!playerController.setPlayer(namejTextField.getText())){
             JOptionPane.showMessageDialog(null, "Por favor, insira seu nome!");
-        else {
+        } else {
             dispose();
-            SudokuFrame sudoku = new SudokuFrame();
-            sudoku.init();
+            SudokuFrame sudokuFrame = new SudokuFrame();
+            sudokuFrame.init();
         }
-    }//GEN-LAST:event_OkJButtonActionPerformed
+    }//GEN-LAST:event_OkjButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -158,12 +179,24 @@ public class PlayerFrame extends javax.swing.JFrame {
 //            }
 //        });
 //    }
+    
+    private void refreshRankingList(){
+        modelPlayer.removeAllElements();
+        rankingList = Hibernate.listAll();
+        for(Player p : rankingList){
+            modelPlayer.addElement(p.getNome());
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton OkJButton;
+    private javax.swing.JButton OkjButton;
+    private javax.swing.JList RankingjList1;
+    private javax.swing.JTabbedPane TabsjTabbedPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField nameJTextField;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField namejTextField;
     // End of variables declaration//GEN-END:variables
 }
