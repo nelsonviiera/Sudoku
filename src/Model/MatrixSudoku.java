@@ -10,19 +10,19 @@ import java.util.Random;
 public class MatrixSudoku extends Observable {
     
     private int matrix[][] = new int [9][9];
-    private static MatrixSudoku instancia;
+    private static MatrixSudoku instance;
 
     private MatrixSudoku() {
         
     }
     
     public static MatrixSudoku getMatrixSudoku() {
-        if(instancia == null){
-            instancia = new MatrixSudoku();
+        if(instance == null){
+            instance = new MatrixSudoku();
             getMatrixSudoku().generateRandomNumber();
             System.out.println("primeira vez");
         }
-        return instancia;
+        return instance;
     }
     
     

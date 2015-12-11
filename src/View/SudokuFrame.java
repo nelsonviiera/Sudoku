@@ -53,7 +53,7 @@ public class SudokuFrame implements Observer {
 //        setAmountNumbersSudoku(0);
     }
     
-    private void init() {
+    public void init() {
         p1JPanel.removeAll();
         p2JPanel.removeAll();
         for(int scrollLine = 0; scrollLine < 9; scrollLine++){
@@ -130,7 +130,6 @@ public class SudokuFrame implements Observer {
                 if (op == JOptionPane.YES_OPTION) {
                     mainFrame.dispose();
                     init();
-                    game();
                 }
             }
         });
@@ -212,15 +211,10 @@ public class SudokuFrame implements Observer {
         }
     }
     
-    private void game() {
-//        sudokuLogic.generateRandomNumber(matrixSudokuFrame);
-//        setAmountNumbersSudoku(sudokuLogic.removeSomeNumbers(matrixSudokuFrame));
-    }
-    
     public static void main(String[] args) {
-        SudokuFrame sudoku = new SudokuFrame();
-        sudoku.init();
-        sudoku.game();
+        new PlayerFrame().setVisible(true);
+//        SudokuFrame sudoku = new SudokuFrame();
+//        sudoku.init();
     }
 
     @Override
