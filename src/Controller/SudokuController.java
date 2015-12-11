@@ -1,17 +1,36 @@
 package Controller;
 
+import Model.MatrixSudoku;
 import Model.Validator;
+import View.SudokuFrame;
+import static java.lang.System.exit;
 
 /**
  *
  * @author yudi
  */
-public class SudokuController implements InterfaceController {
+public class SudokuController{
+
+    private MatrixSudoku matrixSudoku;
     
-    @Override
-    public boolean isValidate(int matrixSudoku[][], int line, int column, int amountNumbersSudoku) {
+    public SudokuController() {
+        matrixSudoku = MatrixSudoku.getMatrixSudoku();
+    }
+    
+    public boolean isValidate(MatrixSudoku matrixSudoku, int line, int column, int number) {
+        boolean validadeNumber;
         Validator valid = new Validator();
-        valid.checkSudoku(matrixSudoku, line, column, amountNumbersSudoku);
-        return true;
+        validadeNumber = valid.checkSudoku(matrixSudoku.getMatrix(), line, column, number);
+        
+        if(validadeNumber == true){
+            matrixSudoku.insertNumber(number, line, column);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void setObserver(SudokuFrame observer) {
+        matrixSudoku.addObserver(observer);
     }
 }

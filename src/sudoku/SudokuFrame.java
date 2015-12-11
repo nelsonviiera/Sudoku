@@ -1,6 +1,6 @@
 package sudoku;
 
-import Model.JTextFieldOnlyNumbers;
+import View.JTextFieldOnlyNumbers;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -224,10 +224,10 @@ public class SudokuFrame{
         this.amountNumbersSudoku = amountNumbersSudoku;
     }
     
-    public static void main(String[] args) {
-        SudokuFrame sudoku = new SudokuFrame();
-        sudoku.init();
-        sudoku.game();
-    }
+//    public static void main(String[] args) {
+//        SudokuFrame sudoku = new SudokuFrame();
+//        sudoku.init();
+//        sudoku.game();
+//    }
 
 }

@@ -1,7 +1,6 @@
 package View;
 
 import Controller.SudokuController;
-import Model.JTextFieldOnlyNumbers;
 import Model.MatrixSudoku;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -32,6 +31,7 @@ public class SudokuFrame implements Observer {
     private JPanel p2JPanel;
     private JFrame mainFrame;
     private JButton newGameJButton;
+    private boolean valid;
 //    private SudokuLogic sudokuLogic;
 //    private Player player;
 //    private boolean finish;
@@ -39,11 +39,13 @@ public class SudokuFrame implements Observer {
 
     public SudokuFrame() {
         this.matrixSudoku = MatrixSudoku.getMatrixSudoku();
+        this.sudokuController = new SudokuController();
         this.newGameJButton = new JButton("Novo Jogo");
         this.matrixSudokuFrame = new JTextFieldOnlyNumbers[9][9];
         this.p1JPanel = new JPanel();
         this.p2JPanel = new JPanel();
         this.mainFrame = new JFrame("Sudoku");
+        this.sudokuController.setObserver(this);
 //        this.sudokuLogic = new SudokuLogic();
 //        this.player = new Player();
 //        player.setNome("Yudi");
@@ -79,7 +81,11 @@ public class SudokuFrame implements Observer {
                     @Override
                     public void keyPressed(KeyEvent event) {
                         if(event.getKeyCode() == KeyEvent.VK_ENTER) {
+                            valid = sudokuController.isValidate(matrixSudoku, matrixCell.getLine(), matrixCell.getColumn(), Integer.parseInt(matrixCell.getText()));
 //                            setFinish(sudokuLogic.checkSudoku(matrixSudokuFrame, matrixCell.getLine(), matrixCell.getColumn(), amountNumbersSudoku));
+                            if (valid == false){
+                                matrixCell.setForeground(Color.red);
+                            }
                         }
                         if(event.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
                             matrixCell.setForeground(Color.black);
@@ -219,6 +225,13 @@ public class SudokuFrame implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        
+        System.out.println("ksapo");
+//        int matriz[][] = matrixSudoku.getMatrix();
+//        for(int i = 0; i < 9; i++){
+//            for(int j = 0; j < 9; j++){
+//                if(matriz[i][j] != 0)
+//                    System.out.println(matriz[i][j]);
+//            }
+//        }
     }
 }

@@ -1,4 +1,4 @@
-package Model;
+package View;
 
 import java.awt.event.KeyEvent;
 import javax.swing.JTextField;

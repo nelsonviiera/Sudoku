@@ -1,6 +1,6 @@
 package sudoku;
 
-import Model.JTextFieldOnlyNumbers;
+import View.JTextFieldOnlyNumbers;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Random;
