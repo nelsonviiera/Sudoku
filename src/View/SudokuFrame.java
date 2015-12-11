@@ -38,14 +38,16 @@ public class SudokuFrame implements Observer {
     private SudokuController sudokuController;
 
     public SudokuFrame() {
+        this.matrixSudokuFrame = new JTextFieldOnlyNumbers[9][9];
         this.matrixSudoku = MatrixSudoku.getMatrixSudoku();
         this.sudokuController = new SudokuController();
+        this.sudokuController.setObserver(this);
         this.newGameJButton = new JButton("Novo Jogo");
-        this.matrixSudokuFrame = new JTextFieldOnlyNumbers[9][9];
         this.p1JPanel = new JPanel();
         this.p2JPanel = new JPanel();
         this.mainFrame = new JFrame("Sudoku");
-        this.sudokuController.setObserver(this);
+        this.matrixSudoku.generateRandomNumber();
+        
 //        this.sudokuLogic = new SudokuLogic();
 //        this.player = new Player();
 //        player.setNome("Yudi");
@@ -130,7 +132,7 @@ public class SudokuFrame implements Observer {
                 if (op == JOptionPane.YES_OPTION) {
                     newGameJButton.removeActionListener(this);
                     mainFrame.dispose();
-                    init();
+                    //chamar player
                 }
             }
         });
@@ -220,13 +222,19 @@ public class SudokuFrame implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        System.out.println("ksapo");
-//        int matriz[][] = matrixSudoku.getMatrix();
-//        for(int i = 0; i < 9; i++){
-//            for(int j = 0; j < 9; j++){
-//                if(matriz[i][j] != 0)
-//                    System.out.println(matriz[i][j]);
-//            }
-//        }
+        setMatrix();
+    }
+
+    private void setMatrix() {
+        int matrix[][] = matrixSudoku.getMatrix();
+        
+        
+        for(int i = 0; i < 9; i++){
+            for(int j = 0; j < 9; j++){
+                this.matrixSudokuFrame[i][j].setText(String.valueOf(matrix[i][j]));
+                //System.out.print(String.valueOf(matrix[i][j]));
+            }
+            //System.out.println("");
+        }
     }
 }

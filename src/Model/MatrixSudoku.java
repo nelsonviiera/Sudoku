@@ -19,14 +19,14 @@ public class MatrixSudoku extends Observable {
     public static MatrixSudoku getMatrixSudoku() {
         if(instance == null){
             instance = new MatrixSudoku();
-            getMatrixSudoku().generateRandomNumber();
-            System.out.println("primeira vez");
+//            getMatrixSudoku().generateRandomNumber();
         }
         return instance;
     }
     
     
     public void generateRandomNumber() {
+        System.out.println("to no generate");
         Random rand = new Random();
         int n = 3;
         int x = rand.nextInt(1000);
@@ -47,9 +47,10 @@ public class MatrixSudoku extends Observable {
         changeBlock3x9(0, 3);
         changeBlock3x9(0, 6);
         
+        removeSomeNumbers();
         setChanged();
         notifyObservers();
-        removeSomeNumbers();
+        System.out.println("Observers: " + countObservers());
     }
     
     private void changeLine(int line1, int line2) {
@@ -87,7 +88,7 @@ public class MatrixSudoku extends Observable {
     }
     
     public void removeSomeNumbers(){
-        System.out.println("Veririficar se há uma forma mais simples para remover");
+        System.out.println("Verificar se há uma forma mais simples para remover");
     }
     
     public void insertNumber(int number, int line, int column) {
@@ -106,7 +107,7 @@ public class MatrixSudoku extends Observable {
     }
 
     public int[][] getMatrix() {
-        return matrix;
+        return this.matrix;
     }
     
     
