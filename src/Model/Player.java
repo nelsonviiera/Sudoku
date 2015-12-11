@@ -31,6 +31,9 @@ public class Player implements Serializable {
     private int totalPlays;
     private static Player instance;
 
+    public Player() {
+    }
+
     private Player(String name, long time) {
         this.name = name;
         this.time = time;

@@ -25,43 +25,34 @@ import javax.swing.border.LineBorder;
  * @author yudi
  */
 public class SudokuFrame implements Observer {
-    private MatrixSudoku matrixSudoku;
     private JTextFieldOnlyNumbers[][] matrixSudokuFrame;
     private JPanel p1JPanel;
     private JPanel p2JPanel;
     private JFrame mainFrame;
     private JButton newGameJButton;
     private boolean valid;
-//    private SudokuLogic sudokuLogic;
-//    private Player player;
-//    private boolean finish;
     private SudokuController sudokuController;
+    private int initialize = 0;
 
     public SudokuFrame() {
-        this.matrixSudokuFrame = new JTextFieldOnlyNumbers[9][9];
-        this.matrixSudoku = MatrixSudoku.getMatrixSudoku();
-        this.sudokuController = new SudokuController();
-        this.sudokuController.setObserver(this);
-        this.newGameJButton = new JButton("Novo Jogo");
+        this.mainFrame = new JFrame("Sudoku"); 
         this.p1JPanel = new JPanel();
         this.p2JPanel = new JPanel();
-        this.mainFrame = new JFrame("Sudoku");
-        this.matrixSudoku.generateRandomNumber();
-        
-//        this.sudokuLogic = new SudokuLogic();
-//        this.player = new Player();
-//        player.setNome("Yudi");
-//        setFinish(false);
-//        setAmountNumbersSudoku(0);
+        this.newGameJButton = new JButton("Novo Jogo");
+        this.matrixSudokuFrame = new JTextFieldOnlyNumbers[9][9];
+        init();
+        sudokuController = new SudokuController();
+        sudokuController.setObserver(this);
+        MatrixSudoku.getMatrixSudoku().generateRandomNumber();
     }
     
     public void init() {
-        p1JPanel.removeAll();
-        p2JPanel.removeAll();
+        this.p1JPanel.removeAll();
+        this.p2JPanel.removeAll();
         for(int scrollLine = 0; scrollLine < 9; scrollLine++){
             for(int scrollColumn = 0; scrollColumn < 9; scrollColumn++){
                 final JTextFieldOnlyNumbers matrixCell = new JTextFieldOnlyNumbers();
-		matrixSudokuFrame[scrollLine][scrollColumn] = new JTextFieldOnlyNumbers();
+		this.matrixSudokuFrame[scrollLine][scrollColumn] = new JTextFieldOnlyNumbers();
                 matrixCell.setFont(new Font("sansserif", Font.BOLD, 40));
                 matrixCell.setForeground(Color.BLACK);
                 matrixCell.setHorizontalAlignment(JTextFieldOnlyNumbers.CENTER);
@@ -71,11 +62,11 @@ public class SudokuFrame implements Observer {
                 matrixCell.addFocusListener(new FocusListener(){
                     @Override
                     public void focusGained(FocusEvent e) {
-                        paintLineColumnMatrix(matrixSudokuFrame, matrixCell.getLine(), matrixCell.getColumn());
+                        paintLineColumnMatrix(matrixCell.getLine(), matrixCell.getColumn());
                     }
                     @Override
                     public void focusLost(FocusEvent e) {
-                        clearPaintLineColumnMatrix(matrixSudokuFrame, matrixCell.getLine(), matrixCell.getColumn());
+                        clearPaintLineColumnMatrix(matrixCell.getLine(), matrixCell.getColumn());
                     }
                 });
                 
@@ -83,8 +74,7 @@ public class SudokuFrame implements Observer {
                     @Override
                     public void keyPressed(KeyEvent event) {
                         if(event.getKeyCode() == KeyEvent.VK_ENTER) {
-                            valid = sudokuController.isValidate(matrixSudoku, matrixCell.getLine(), matrixCell.getColumn(), Integer.parseInt(matrixCell.getText()));
-//                            setFinish(sudokuLogic.checkSudoku(matrixSudokuFrame, matrixCell.getLine(), matrixCell.getColumn(), amountNumbersSudoku));
+                            valid = sudokuController.isValidate(matrixCell.getLine(), matrixCell.getColumn(), Integer.parseInt(matrixCell.getText()));
                             if (valid == false){
                                 matrixCell.setForeground(Color.red);
                             }
@@ -92,40 +82,32 @@ public class SudokuFrame implements Observer {
                         if(event.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
                             matrixCell.setForeground(Color.black);
                         }
-//                        if(getAmountNumbersSudoku() >= 81) {
-//                            if(isFinish()) {
-//                                JOptionPane.showMessageDialog(p1JPanel, "Parabéns " + player.getNome() +", para jogar novamente, clique em OK e Novo Jogo");
-//                                p1JPanel.setEnabled(false);
-//                                mainFrame.dispose();
-//                                init();
-//                                game();
-//                            }
-//                        }
                     }
                 });
                 
-                matrixSudokuFrame[scrollLine][scrollColumn] = matrixCell;
-		p1JPanel.add(matrixSudokuFrame[scrollLine][scrollColumn]);
+                this.matrixSudokuFrame[scrollLine][scrollColumn] = matrixCell;
+                System.out.println(matrixSudokuFrame[scrollLine][scrollColumn].getText());
+		this.p1JPanel.add(this.matrixSudokuFrame[scrollLine][scrollColumn]);
             }
 	}
         
-        p1JPanel.setLayout(new GridLayout(9,9,1,1));
-	p1JPanel.setSize(540, 600);
+        this.p1JPanel.setLayout(new GridLayout(9,9,1,1));
+	this.p1JPanel.setSize(540, 600);
 		
-	p2JPanel.setLayout(new GridLayout(1,2,200,10));
-	p2JPanel.add(newGameJButton);
-	p2JPanel.setBorder(new LineBorder(new Color(238,238,238),20));
+	this.p2JPanel.setLayout(new GridLayout(1,2,200,10));
+	this.p2JPanel.add(this.newGameJButton);
+	this.p2JPanel.setBorder(new LineBorder(new Color(238,238,238),20));
         
-        mainFrame.setLayout(new BorderLayout(0,0));
-	mainFrame.add(p1JPanel, BorderLayout.CENTER);
-	mainFrame.add(p2JPanel, BorderLayout.SOUTH);
-	mainFrame.setSize(580, 640);
-	mainFrame.setLocationRelativeTo(null);
-	mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	mainFrame.setResizable(false);
-	mainFrame.setVisible(true);
+        this.mainFrame.setLayout(new BorderLayout(0,0));
+	this.mainFrame.add(this.p1JPanel, BorderLayout.CENTER);
+	this.mainFrame.add(this.p2JPanel, BorderLayout.SOUTH);
+	this.mainFrame.setSize(580, 640);
+	this.mainFrame.setLocationRelativeTo(null);
+	this.mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	this.mainFrame.setResizable(false);
+	this.mainFrame.setVisible(true);
         
-        newGameJButton.addActionListener(new ActionListener() {
+        this.newGameJButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int op = JOptionPane.showConfirmDialog(null, "Deseja iniciar um novo jogo?", "", JOptionPane.YES_NO_OPTION);
@@ -138,103 +120,103 @@ public class SudokuFrame implements Observer {
         });
     }
     
-    private void paintLineColumnMatrix(JTextFieldOnlyNumbers[][] matrixSudokuFrame, int line, int column) {
+    private void paintLineColumnMatrix(int line, int column) {
         for(int scrollLine = 0; scrollLine < 9; scrollLine++)
-            matrixSudokuFrame[scrollLine][column].setBackground(Color.LIGHT_GRAY);
+            this.matrixSudokuFrame[scrollLine][column].setBackground(Color.LIGHT_GRAY);
         for(int scrollColumn = 0; scrollColumn < 9; scrollColumn++)
-            matrixSudokuFrame[line][scrollColumn].setBackground(Color.LIGHT_GRAY);
+            this.matrixSudokuFrame[line][scrollColumn].setBackground(Color.LIGHT_GRAY);
         
         if(line < 3) {
             if(column < 3)
-                paintMatrix(matrixSudokuFrame, 0, 0);
+                paintMatrix(0, 0);
             else if(column >= 3 && column < 6)
-                paintMatrix(matrixSudokuFrame, 0, 3);
+                paintMatrix(0, 3);
             else
-                paintMatrix(matrixSudokuFrame, 0, 6);
+                paintMatrix(0, 6);
         } else if(line >= 3 && line < 6) {
             if(column < 3)
-                paintMatrix(matrixSudokuFrame, 3, 0);
+                paintMatrix(3, 0);
             else if(column >= 3 && column < 6)
-                paintMatrix(matrixSudokuFrame, 3, 3);
+                paintMatrix(3, 3);
             else
-                paintMatrix(matrixSudokuFrame, 3, 6);
+                paintMatrix(3, 6);
         } else {
             if(column < 3)
-                paintMatrix(matrixSudokuFrame, 6, 0);
+                paintMatrix(6, 0);
             else if(column >= 3 && column < 6)
-                paintMatrix(matrixSudokuFrame, 6, 3);
+                paintMatrix(6, 3);
             else
-                paintMatrix(matrixSudokuFrame, 6, 6);
+                paintMatrix(6, 6);
         }
     }
     
-    private void clearPaintLineColumnMatrix(JTextFieldOnlyNumbers[][] matrixSudokuFrame, int line, int column) {
+    private void clearPaintLineColumnMatrix(int line, int column) {
         for(int scrollLine = 0; scrollLine < 9; scrollLine++)
-            matrixSudokuFrame[scrollLine][column].setBackground(Color.WHITE);        
+            this.matrixSudokuFrame[scrollLine][column].setBackground(Color.WHITE);        
         for(int scrollColumn = 0; scrollColumn < 9; scrollColumn++)
-            matrixSudokuFrame[line][scrollColumn].setBackground(Color.WHITE);
+            this.matrixSudokuFrame[line][scrollColumn].setBackground(Color.WHITE);
         
         if(line < 3) {
             if(column < 3)
-                clearPaintMatrix(matrixSudokuFrame, 0, 0);
+                clearPaintMatrix(0, 0);
             else if(column >= 3 && column < 6)
-                clearPaintMatrix(matrixSudokuFrame, 0, 3);
+                clearPaintMatrix(0, 3);
             else
-                clearPaintMatrix(matrixSudokuFrame, 0, 6);
+                clearPaintMatrix(0, 6);
         } else if(line >= 3 && line < 6) {
             if(column < 3)
-                clearPaintMatrix(matrixSudokuFrame, 3, 0);
+                clearPaintMatrix(3, 0);
             else if(column >= 3 && column < 6)
-                clearPaintMatrix(matrixSudokuFrame, 3, 3);
+                clearPaintMatrix(3, 3);
             else
-                clearPaintMatrix(matrixSudokuFrame, 3, 6);
+                clearPaintMatrix(3, 6);
         } else {
             if(column < 3)
-                clearPaintMatrix(matrixSudokuFrame, 6, 0);
+                clearPaintMatrix(6, 0);
             else if(column >= 3 && column < 6)
-                clearPaintMatrix(matrixSudokuFrame, 6, 3);
+                clearPaintMatrix(6, 3);
             else
-                clearPaintMatrix(matrixSudokuFrame, 6, 6);
+                clearPaintMatrix(6, 6);
         }
     }
     
-    private void paintMatrix(JTextFieldOnlyNumbers[][] matrixSudokuFrame, int line, int column) {
+    private void paintMatrix(int line, int column) {
         for(int scrollLine = line; scrollLine < (line + 3); scrollLine++) {
             for(int scrollColumn = column; scrollColumn < (column + 3); scrollColumn++) {
-                matrixSudokuFrame[scrollLine][scrollColumn].setBackground(Color.LIGHT_GRAY);
+                this.matrixSudokuFrame[scrollLine][scrollColumn].setBackground(Color.LIGHT_GRAY);
             }
         }
     }
     
-    private void clearPaintMatrix(JTextFieldOnlyNumbers[][] matrixSudokuFrame, int line, int column) {
+    private void clearPaintMatrix(int line, int column) {
         for(int scrollLine = line; scrollLine < (line + 3); scrollLine++) {
             for(int scrollColumn = column; scrollColumn < (column + 3); scrollColumn++) {
-                matrixSudokuFrame[scrollLine][scrollColumn].setBackground(Color.WHITE);
+                this.matrixSudokuFrame[scrollLine][scrollColumn].setBackground(Color.WHITE);
             }
         }
     }
     
     public static void main(String[] args) {
         new PlayerFrame().setVisible(true);
-//        SudokuFrame sudoku = new SudokuFrame();
-//        sudoku.init();
     }
 
     @Override
     public void update(Observable o, Object arg) {
-        setMatrix();
+        this.setMatrix();
     }
 
     private void setMatrix() {
-        int matrix[][] = matrixSudoku.getMatrix();
-        
-        
+        int matrix[][] = MatrixSudoku.getMatrixSudoku().getMatrix();
         for(int i = 0; i < 9; i++){
             for(int j = 0; j < 9; j++){
-                this.matrixSudokuFrame[i][j].setText(String.valueOf(matrix[i][j]));
-                //System.out.print(String.valueOf(matrix[i][j]));
+                if(matrix[i][j] != 0){
+                    this.matrixSudokuFrame[i][j].setText(String.valueOf(matrix[i][j]));
+                    if(initialize == 0){
+                        this.matrixSudokuFrame[i][j].setEditable(false);
+                        initialize++;
+                    }
+                }
             }
-            //System.out.println("");
         }
     }
 }

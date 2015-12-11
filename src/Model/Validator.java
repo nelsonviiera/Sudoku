@@ -5,13 +5,13 @@
  */
 package Model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author nelsonjr
  */
 public class Validator {
-    
-    private int scrollLine, scrollColumn;
     
     public boolean checkSudoku(int[][] matrixSudoku, int line, int column, int number) {
         boolean check3x3;
@@ -50,7 +50,7 @@ public class Validator {
     }
     
     private boolean checkLine(int matrixSudoku[][], int line, int column, int number) {
-        for(scrollColumn = 0; scrollColumn < 9; scrollColumn++) {
+        for(int scrollColumn = 0; scrollColumn < 9; scrollColumn++) {
             if(scrollColumn == column)
                 scrollColumn++;
             if(scrollColumn < 9) {
@@ -63,7 +63,7 @@ public class Validator {
     }
     
     private boolean checkColumn(int matrixSudoku[][], int line, int column, int number) {
-        for(scrollLine = 0; scrollLine < 9; scrollLine++) {
+        for(int scrollLine = 0; scrollLine < 9; scrollLine++) {
             if(scrollLine == line)
                 scrollLine++;
             if(scrollLine < 9) {
@@ -76,8 +76,8 @@ public class Validator {
     }
     
     private boolean checkMatrix3x3(int matrixSudoku[][], int line, int column, int lineMatrix3x3, int columnMatrix3x3, int number) {
-        for(scrollLine = lineMatrix3x3; scrollLine < lineMatrix3x3 + 3; scrollLine++) {
-            for(scrollColumn = columnMatrix3x3; scrollColumn < columnMatrix3x3 + 3; scrollColumn++) {
+        for(int scrollLine = lineMatrix3x3; scrollLine < lineMatrix3x3 + 3; scrollLine++) {
+            for(int scrollColumn = columnMatrix3x3; scrollColumn < columnMatrix3x3 + 3; scrollColumn++) {
                 if(scrollLine == line && scrollColumn == column)
                     scrollColumn++;
                 if(scrollColumn < columnMatrix3x3 + 3) {
@@ -89,4 +89,67 @@ public class Validator {
         return true;
     }
     
+    public boolean checkSudoku() {
+        int matrix[][] = MatrixSudoku.getMatrixSudoku().getMatrix();
+        
+        if(!checkLine())
+            return false;
+        else if(!checkcollumn())
+            return false;
+        else {
+            if(!checkMatrix3x3(0, 0) && !checkMatrix3x3(0, 3) && !checkMatrix3x3(0, 6))
+                return false;
+            else if(!checkMatrix3x3(3, 0) && !checkMatrix3x3(3, 3) && !checkMatrix3x3(3, 6))
+                return false;
+            else if(!checkMatrix3x3(6, 0) && !checkMatrix3x3(6, 3) && !checkMatrix3x3(6, 6))
+                return false;
+        }
+        System.out.println("true");
+        return true;
+    }
+    
+    private boolean checkLine() {
+        int matrix[][] = MatrixSudoku.getMatrixSudoku().getMatrix();
+        ArrayList<Integer> list = new ArrayList<>();
+        for(int scrollLine = 0; scrollLine < 9; scrollLine++) {
+            for(int scrollColumn = 0; scrollColumn < 9; scrollColumn++) {
+                if(list.contains(matrix[scrollLine][scrollColumn]))
+                    return false;
+                list.add(matrix[scrollLine][scrollColumn]);
+            }
+            list.clear();
+        }
+        System.out.println("true");
+        return true;
+    }
+    
+    private boolean checkcollumn() {
+        int matrix[][] = MatrixSudoku.getMatrixSudoku().getMatrix();
+        ArrayList<Integer> list = new ArrayList<>();
+        for(int scrollColumn = 0; scrollColumn < 9; scrollColumn++) {
+            for(int scrollLine = 0; scrollLine < 9; scrollLine++) {
+                if(list.contains(matrix[scrollLine][scrollColumn]))
+                    return false;
+                list.add(matrix[scrollLine][scrollColumn]);
+            }
+            list.clear();
+        }
+        System.out.println("true");
+        return true;
+    }
+    
+    private boolean checkMatrix3x3(int lineMatrix3x3, int columnMatrix3x3) {
+        int matrix[][] = MatrixSudoku.getMatrixSudoku().getMatrix();
+        ArrayList<Integer> list = new ArrayList<>();
+        for(int scrollLine = lineMatrix3x3; scrollLine < lineMatrix3x3 + 3; scrollLine++) {
+            for(int scrollColumn = columnMatrix3x3; scrollColumn < columnMatrix3x3 + 3; scrollColumn++) {
+                if(list.contains(matrix[scrollLine][scrollColumn]))
+                    return false;
+                list.add(matrix[scrollLine][scrollColumn]);
+            }
+            list.clear();
+        }
+        System.out.println("true");
+        return true;
+    }
 }

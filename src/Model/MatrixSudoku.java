@@ -1,5 +1,6 @@
 package Model;
 
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Random;
 
@@ -11,7 +12,9 @@ public class MatrixSudoku extends Observable {
     
     private int matrix[][] = new int [9][9];
     private static MatrixSudoku instance;
-
+    private int countNumbers;
+    private boolean isFinish = false;
+    
     private MatrixSudoku() {
         
     }
@@ -19,14 +22,12 @@ public class MatrixSudoku extends Observable {
     public static MatrixSudoku getMatrixSudoku() {
         if(instance == null){
             instance = new MatrixSudoku();
-//            getMatrixSudoku().generateRandomNumber();
         }
         return instance;
     }
     
     
     public void generateRandomNumber() {
-        System.out.println("to no generate");
         Random rand = new Random();
         int n = 3;
         int x = rand.nextInt(1000);
@@ -47,10 +48,16 @@ public class MatrixSudoku extends Observable {
         changeBlock3x9(0, 3);
         changeBlock3x9(0, 6);
         
+        for(int i = 0; i < 9; i++){
+            for(int j = 0; j < 9; j++){
+                System.out.print(matrix[i][j]);
+            }
+            System.out.println("");
+        }
+        
         removeSomeNumbers();
         setChanged();
         notifyObservers();
-        System.out.println("Observers: " + countObservers());
     }
     
     private void changeLine(int line1, int line2) {
@@ -88,13 +95,240 @@ public class MatrixSudoku extends Observable {
     }
     
     public void removeSomeNumbers(){
-        System.out.println("Verificar se há uma forma mais simples para remover");
+        int amountNumbersSudoku = 0;
+        Random rand = new Random();
+        int numbersIn3x3 = rand.nextInt(8);
+        ArrayList<Integer> vAux = new ArrayList<>();
+        int i, j, k;
+        
+        ArrayList<Integer> characters = new ArrayList<>();
+        for(i = 1; i <= 9; i++)
+            characters.add(i);
+        
+        for(i = 0; i < numbersIn3x3; i++){
+            j = rand.nextInt(characters.size());
+            vAux.add(characters.get(j));
+            characters.remove(characters.get(j));
+            j++;
+        }
+
+        for(i = 0; i < 3; i++){
+            for(j = 0; j < 3; j++){
+                k = matrix[i][j];
+                if(!vAux.contains(k))
+                    matrix[i][j] = 0;
+                else {
+                    
+                    amountNumbersSudoku++;
+                }
+            }
+        }
+
+        vAux = new ArrayList();
+        for(i = 1; i <= 9; i++)
+            characters.add(i);
+        numbersIn3x3 = rand.nextInt(8);
+
+        for(i = 0; i < numbersIn3x3; i++){
+            j = rand.nextInt(characters.size());
+            vAux.add(characters.get(j));
+            characters.remove(characters.get(j));
+            j++;
+        }
+
+        for(i = 0; i < 3; i++){
+            for(j = 3; j < 6; j++){
+                k = matrix[i][j];
+                if(!vAux.contains(k))
+                    matrix[i][j] = 0;
+                else {
+                    
+                    amountNumbersSudoku++;
+                }
+            }
+        }
+        
+        
+        vAux = new ArrayList();
+        for(i = 1; i <= 9; i++)
+            characters.add(i);
+        numbersIn3x3 = rand.nextInt(8);
+
+        for(i = 0; i < numbersIn3x3; i++){
+            j = rand.nextInt(characters.size());
+            vAux.add(characters.get(j));
+            characters.remove(characters.get(j));
+            j++;
+        }
+
+        for(i = 0; i < 3; i++){
+            for(j = 6; j < 9; j++){
+                k = matrix[i][j];
+                if(!vAux.contains(k))
+                    matrix[i][j] = 0;
+                else {
+                    
+                    amountNumbersSudoku++;
+                }
+            }
+        }
+        
+        
+        vAux = new ArrayList();
+        for(i = 1; i <= 9; i++)
+            characters.add(i);
+        numbersIn3x3 = rand.nextInt(8);
+
+        for(i = 0; i < numbersIn3x3; i++){
+            j = rand.nextInt(characters.size());
+            vAux.add(characters.get(j));
+            characters.remove(characters.get(j));
+            j++;
+        }
+
+        for(i = 3; i < 6; i++){
+            for(j = 0; j < 3; j++){
+                k = matrix[i][j];
+                if(!vAux.contains(k))
+                    matrix[i][j] = 0;
+                else {
+                    
+                    amountNumbersSudoku++;
+                }
+            }
+        }
+        
+        
+        vAux = new ArrayList();
+        for(i = 1; i <= 9; i++)
+            characters.add(i);
+        numbersIn3x3 = rand.nextInt(8);
+
+        for(i = 0; i < numbersIn3x3; i++){
+            j = rand.nextInt(characters.size());
+            vAux.add(characters.get(j));
+            characters.remove(characters.get(j));
+            j++;
+        }
+
+        for(i = 3; i < 6; i++){
+            for(j = 3; j < 6; j++){
+                k = matrix[i][j];
+                if(!vAux.contains(k))
+                    matrix[i][j] = 0;
+                else {
+                    
+                    amountNumbersSudoku++;
+                }
+            }
+        }
+        
+        
+        vAux = new ArrayList();
+        for(i = 1; i <= 9; i++)
+            characters.add(i);
+        numbersIn3x3 = rand.nextInt(8);
+
+        for(i = 0; i < numbersIn3x3; i++){
+            j = rand.nextInt(characters.size());
+            vAux.add(characters.get(j));
+            characters.remove(characters.get(j));
+            j++;
+        }
+
+        for(i = 3; i < 6; i++){
+            for(j = 6; j < 9; j++){
+                k = matrix[i][j];
+                if(!vAux.contains(k))
+                    matrix[i][j] = 0;
+                else {
+                    
+                    amountNumbersSudoku++;
+                }
+            }
+        }
+        
+        
+        vAux = new ArrayList();
+        for(i = 1; i <= 9; i++)
+            characters.add(i);
+        numbersIn3x3 = rand.nextInt(8);
+
+        for(i = 0; i < numbersIn3x3; i++){
+            j = rand.nextInt(characters.size());
+            vAux.add(characters.get(j));
+            characters.remove(characters.get(j));
+            j++;
+        }
+
+        for(i = 6; i < 9; i++){
+            for(j = 0; j < 3; j++){
+                k = matrix[i][j];
+                if(!vAux.contains(k))
+                    matrix[i][j] = 0;
+                else {
+                    
+                    amountNumbersSudoku++;
+                }
+            }
+        }
+        
+        
+        vAux = new ArrayList();
+        for(i = 1; i <= 9; i++)
+            characters.add(i);
+        numbersIn3x3 = rand.nextInt(8);
+
+        for(i = 0; i < numbersIn3x3; i++){
+            j = rand.nextInt(characters.size());
+            vAux.add(characters.get(j));
+            characters.remove(characters.get(j));
+            j++;
+        }
+
+        for(i = 6; i < 9; i++){
+            for(j = 3; j < 6; j++){
+                k = matrix[i][j];
+                if(!vAux.contains(k))
+                    matrix[i][j] = 0;
+                else {
+                    
+                    amountNumbersSudoku++;
+                }
+            }
+        }
+        
+        
+        vAux = new ArrayList();
+        for(i = 1; i <= 9; i++)
+            characters.add(i);
+        numbersIn3x3 = rand.nextInt(8);
+
+        for(i = 0; i < numbersIn3x3; i++){
+            j = rand.nextInt(characters.size());
+            vAux.add(characters.get(j));
+            characters.remove(characters.get(j));
+            j++;
+        }
+
+        for(i = 6; i < 9; i++){
+            for(j = 6; j < 9; j++){
+                k = matrix[i][j];
+                if(!vAux.contains(k))
+                    matrix[i][j] = 0;
+                else {
+                    
+                    amountNumbersSudoku++;
+                }
+            }
+        }
+        setCountNumbers(amountNumbersSudoku);
     }
     
     public void insertNumber(int number, int line, int column) {
         //TRATAR ERRO
         this.matrix[line][column] = number;
-        System.out.println("entrou insert");
+        System.out.println("Números no Sudoku: " + getCountNumbers());
         setChanged();
         notifyObservers();
     }
@@ -109,6 +343,22 @@ public class MatrixSudoku extends Observable {
     public int[][] getMatrix() {
         return this.matrix;
     }
-    
-    
+
+    public int getCountNumbers() {
+        return countNumbers;
+    }
+
+    public void setCountNumbers(int countNumbers) {
+        this.countNumbers = countNumbers;
+    }
+
+    public boolean isIsFinish() {
+        return isFinish;
+    }
+
+    public void setIsFinish(boolean isFinish) {
+        this.isFinish = isFinish;
+    }
+
+   
 }

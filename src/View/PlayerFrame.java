@@ -141,7 +141,6 @@ public class PlayerFrame extends javax.swing.JFrame {
         } else {
             dispose();
             SudokuFrame sudokuFrame = new SudokuFrame();
-            sudokuFrame.init();
         }
     }//GEN-LAST:event_OkjButtonActionPerformed
 
